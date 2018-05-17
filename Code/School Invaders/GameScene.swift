@@ -32,13 +32,14 @@ class StudentWalk: SKSpriteNode {
 
 class GameScene: SKScene {
     
-    override func didMove(to view: SKView) {
+    /*override func didMove(to view: SKView) {
         let studentWalk = StudentWalk()
         studentWalk.position = CGPoint(x: size.width / 2, y: size.height / 1.5)
         addChild(studentWalk)
         
         studentWalk.beginAnimation()
-    }
+    }*/
+    
     let Voc1Eng = SKLabelNode()
     let Voc2Eng = SKLabelNode()
     let Voc3Eng = SKLabelNode()
@@ -71,7 +72,7 @@ class GameScene: SKScene {
         Back.fontColor = SKColor.black
         Back.fontName = "Arial-Bold"
         Back.text = "Retour"
-        Back.position = CGPoint(x: size.width / 1.05, y: size.height / 1)
+        Back.position = CGPoint(x: size.width / 1.04, y: size.height / 1.035)
         addChild(Back)
         
         switch flag{
@@ -99,11 +100,12 @@ class GameScene: SKScene {
         Voc4Eng.position = CGPoint(x: size.width / 7, y: size.height / 1.75)
         addChild(Voc4Eng)
             
-        default:Error.fontSize = 30
+        default:Error.fontSize = 50
         Error.fontColor = SKColor.black
         Error.text = "Error"
-        Error.position = CGPoint(x: size.width / 7, y: size.height / 1.75)
+        Error.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(Error)
+            
         }
     }
     

@@ -46,7 +46,7 @@ class MenuScene: SKScene {
         FrancaisTxT.fontSize = 28
         FrancaisTxT.fontColor = SKColor.black
         FrancaisTxT.fontName = "Arial-Bold"
-        FrancaisTxT.text = "Francais"
+        FrancaisTxT.text = "Français"
         FrancaisTxT.position = CGPoint(x: size.width / 4.5, y: size.height / 2.1)
         addChild(FrancaisTxT)
         
