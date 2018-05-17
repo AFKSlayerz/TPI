@@ -13,7 +13,7 @@ class GameViewController: UIViewController {
     
     var scene: GameScene!                       //Type : GameScene, Name : scene
     var GameInt = 0
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +42,6 @@ class GameViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    /*func game(){
-     GameInt += 1
-     timeLabel.text = String(GameInt)
-     }*/
     
     override var prefersStatusBarHidden : Bool {
         return true

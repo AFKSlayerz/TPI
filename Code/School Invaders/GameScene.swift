@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class StudentWalk: SKSpriteNode {
+/*class StudentWalk: SKSpriteNode {
     
     init() {
         let texture = SKTexture(imageNamed: "static")
@@ -28,8 +28,9 @@ class StudentWalk: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
+}*/
 
+var StudentPosX:CGFloat = 0
 class GameScene: SKScene {
     
     /*override func didMove(to view: SKView) {
@@ -49,14 +50,23 @@ class GameScene: SKScene {
     let Student = SKSpriteNode(imageNamed: "Student.png")
     let Teacher = SKSpriteNode(imageNamed: "Teacher.png")
     let PaperPlane = SKSpriteNode(imageNamed: "PaperPlane.png")
+    let GameStared:Bool = false
 
-
+    // Screen width.
+    public var screenWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
+    // Screen height.
+    public var screenHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
     override init(size: CGSize) {
         super.init(size: size)
         
         backgroundColor = SKColor.white
         
-        Student.position = CGPoint(x: size.width / 2, y: size.height / 1.1)  //The game will be built from the top-left
+        Student.position = CGPoint(x: StudentPosX, y: size.height / 1.1)  //The game will be built from the top-left
         Student.size = CGSize(width: 80, height: 90)  //The anchor point (top left)
         addChild(Student)
         
@@ -105,8 +115,8 @@ class GameScene: SKScene {
         Error.text = "Error"
         Error.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(Error)
-            
         }
+
     }
     
     required init(coder aDecoder: NSCoder) {

@@ -240,8 +240,8 @@ class MenuScene: SKScene {
             flag = 14
             GO.isHidden = false
             Voc4.fontColor = SKColor.gray
-
-        }else if GO.contains(touchLocation){
+        }
+        if GO.contains(touchLocation){
             let reveal = SKTransition.doorsOpenVertical(withDuration: 0.5)
             let gameScene = GameScene(size: self.size)
             self.view?.presentScene(gameScene, transition: reveal)
