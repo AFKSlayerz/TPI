@@ -9,37 +9,7 @@
 import UIKit
 import SpriteKit
 
-/*class StudentWalk: SKSpriteNode {
-    
-    init() {
-        let texture = SKTexture(imageNamed: "static")
-        super.init(texture: texture, color: .clear, size: texture.size())
-    }
-    
-    
-    func beginAnimation() {
-        let textureAtlas = SKTextureAtlas(named: "Student")
-        let frames = ["static", "leftwalk", "rightwalk"].map { textureAtlas.textureNamed($0) }
-        let animate = SKAction.animate(with: frames, timePerFrame: 0.1)
-        let forever = SKAction.repeatForever(animate)
-        self.run(forever)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}*/
-
-var StudentPosX:CGFloat = 0
 class GameScene: SKScene {
-    
-    /*override func didMove(to view: SKView) {
-        let studentWalk = StudentWalk()
-        studentWalk.position = CGPoint(x: size.width / 2, y: size.height / 1.5)
-        addChild(studentWalk)
-        
-        studentWalk.beginAnimation()
-    }*/
     
     let Voc1Eng = SKLabelNode()
     let Voc2Eng = SKLabelNode()
@@ -66,7 +36,7 @@ class GameScene: SKScene {
         
         backgroundColor = SKColor.white
         
-        Student.position = CGPoint(x: StudentPosX, y: size.height / 1.1)  //The game will be built from the top-left
+        Student.position = CGPoint(x: size.width / 2, y: size.height / 1.1)  //The game will be built from the top-left
         Student.size = CGSize(width: 80, height: 90)  //The anchor point (top left)
         addChild(Student)
         
@@ -116,9 +86,8 @@ class GameScene: SKScene {
         Error.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(Error)
         }
-
     }
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

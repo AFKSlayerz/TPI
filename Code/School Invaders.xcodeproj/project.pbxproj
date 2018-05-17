@@ -13,6 +13,7 @@
 		9746F86720A3003200DEC427 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9746F86520A3003200DEC427 /* Main.storyboard */; };
 		9746F86920A3003300DEC427 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9746F86820A3003300DEC427 /* Assets.xcassets */; };
 		9746F87720A3003300DEC427 /* School_InvadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746F87620A3003300DEC427 /* School_InvadersTests.swift */; };
+		97557E9220AD8BD6001359EA /* VocProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97557E9120AD8BD6001359EA /* VocProvider.swift */; };
 		977FB64D20AAC28900CA884A /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977FB64C20AAC28900CA884A /* MenuScene.swift */; };
 		97DBB92A20AC2BA500610D0F /* Student.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92920AC2BA500610D0F /* Student.png */; };
 		97DBB92C20AC2BAC00610D0F /* Teacher.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92B20AC2BAC00610D0F /* Teacher.png */; };
@@ -43,6 +44,7 @@
 		9746F87220A3003300DEC427 /* School InvadersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "School InvadersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9746F87620A3003300DEC427 /* School_InvadersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = School_InvadersTests.swift; sourceTree = "<group>"; };
 		9746F87820A3003300DEC427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97557E9120AD8BD6001359EA /* VocProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocProvider.swift; sourceTree = "<group>"; };
 		977FB64C20AAC28900CA884A /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		97DBB92920AC2BA500610D0F /* Student.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Student.png; sourceTree = "<group>"; };
 		97DBB92B20AC2BAC00610D0F /* Teacher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Teacher.png; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				9746F86820A3003300DEC427 /* Assets.xcassets */,
 				9746F86D20A3003300DEC427 /* Info.plist */,
 				97DBB93420AC3BA800610D0F /* StudentWalk.swift */,
+				97557E9120AD8BD6001359EA /* VocProvider.swift */,
 			);
 			path = "School Invaders";
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				97DBB93520AC3BA800610D0F /* StudentWalk.swift in Sources */,
 				9746F86220A3003200DEC427 /* GameScene.swift in Sources */,
 				977FB64D20AAC28900CA884A /* MenuScene.swift in Sources */,
+				97557E9220AD8BD6001359EA /* VocProvider.swift in Sources */,
 				9746F86420A3003200DEC427 /* GameViewController.swift in Sources */,
 				9746F85C20A3003200DEC427 /* AppDelegate.swift in Sources */,
 			);

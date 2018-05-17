@@ -26,7 +26,7 @@ class MenuScene: SKScene {
     let ItalianoTxT = SKLabelNode()
     let Back = SKLabelNode()
     let GO = SKLabelNode()
-
+    var Languages = VocProvider().GetLanguages
     
     
     override init(size: CGSize) {
@@ -42,11 +42,13 @@ class MenuScene: SKScene {
         SelectLanguageProf.position = CGPoint(x: size.width / 4.5, y: size.height / 1.75)
         addChild(SelectLanguageProf)
         
+        
+        print(Languages)
         //Francais
         FrancaisTxT.fontSize = 28
         FrancaisTxT.fontColor = SKColor.black
         FrancaisTxT.fontName = "Arial-Bold"
-        FrancaisTxT.text = "Français"
+        FrancaisTxT.text = "Francais"
         FrancaisTxT.position = CGPoint(x: size.width / 4.5, y: size.height / 2.1)
         addChild(FrancaisTxT)
         
@@ -240,8 +242,8 @@ class MenuScene: SKScene {
             flag = 14
             GO.isHidden = false
             Voc4.fontColor = SKColor.gray
-        }
-        if GO.contains(touchLocation){
+
+        }else if GO.contains(touchLocation){
             let reveal = SKTransition.doorsOpenVertical(withDuration: 0.5)
             let gameScene = GameScene(size: self.size)
             self.view?.presentScene(gameScene, transition: reveal)
