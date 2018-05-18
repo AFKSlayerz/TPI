@@ -20,19 +20,20 @@ class MenuScene: SKScene {
     let Voc2 = SKLabelNode()
     let Voc3 = SKLabelNode()
     let Voc4 = SKLabelNode()
-    let FrancaisTxT = SKLabelNode()
-    let EnglishTxT = SKLabelNode()
-    let DeutschTxT = SKLabelNode()
-    let ItalianoTxT = SKLabelNode()
+    var LanguagesTxT = SKLabelNode(fontNamed: "Arial-Bold")
     let Back = SKLabelNode()
     let GO = SKLabelNode()
-    var Languages = VocProvider().GetLanguages
-    
+    let button = UIButton(type: UIButtonType.system) as UIButton
+    var i:Int = 0
+    var LanguagesX:Int = 300
+    var LanguagesY:Int = 300
     
     override init(size: CGSize) {
         super.init(size: size)
         
         backgroundColor = SKColor.white
+        
+        
         
         //Select language of the professor
         SelectLanguageProf.fontSize = 30
@@ -43,23 +44,24 @@ class MenuScene: SKScene {
         addChild(SelectLanguageProf)
         
         
-        print(Languages)
-        //Francais
-        FrancaisTxT.fontSize = 28
-        FrancaisTxT.fontColor = SKColor.black
-        FrancaisTxT.fontName = "Arial-Bold"
-        FrancaisTxT.text = "Francais"
-        FrancaisTxT.position = CGPoint(x: size.width / 4.5, y: size.height / 2.1)
-        addChild(FrancaisTxT)
+        for var x in 0..<VocProvider().Languages.count {
+            var line = ""
+            for var y in 0..<VocProvider().Languages[x].count {
+                var label = LanguagesTxT.copy() as! SKLabelNode
+                line += String(VocProvider().Languages[x][y])
+                line += " "
+                LanguagesTxT.fontSize = 28
+                LanguagesTxT.fontColor = SKColor.black
+                LanguagesTxT.text = line
+                LanguagesTxT.position = CGPoint(x: LanguagesX , y: LanguagesY)
+                self.addChild(label)
+                LanguagesX = LanguagesX + 50
+                LanguagesY = LanguagesY + 50
+            }
+        }
         
-        //English
-        EnglishTxT.fontSize = 28
-        EnglishTxT.fontColor = SKColor.black
-        EnglishTxT.fontName = "Arial-Bold"
-        EnglishTxT.text = "English"
-        EnglishTxT.position = CGPoint(x: size.width / 4.5, y: size.height / 2.6)
-        addChild(EnglishTxT)
-        
+
+
         //Select language of the student
         SelectLanguageStudent.fontSize = 30
         SelectLanguageStudent.fontColor = SKColor.black
@@ -142,6 +144,7 @@ class MenuScene: SKScene {
         Back.position = CGPoint(x: size.width / 12, y: size.height / 1.1)
         addChild(Back)
     }
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -150,30 +153,30 @@ class MenuScene: SKScene {
         let touchLocation = touch!.location(in: self)
         //Si FR(Flag 1) + ENG(Flag 2) -> Voc 1 et 2 ENG, Si ENG(Flag 11 + FR (Flag 12) -> Voc 3 et 4 FR
         //Si Voc 1 -> Flag 3, Voc 2 -> Flag 4, Voc 3 -> Flag 13, Voc 4 -> Flag 14
-        if FrancaisTxT.contains(touchLocation)  && flag == 0 {
+        if LanguagesTxT.contains(touchLocation)  && flag == 0 {
             SelectLanguageStudent.isHidden = false
             SelectLanguageProf.isHidden = true
             Back.isHidden = false
             flag = 1
-            FrancaisTxT.fontColor = SKColor.gray
+            LanguagesTxT.fontColor = SKColor.gray
             
-        }else if EnglishTxT.contains(touchLocation) && flag == 1{
+        }else if LanguagesTxT.contains(touchLocation) && flag == 1{
             EnglishVoc.isHidden = false
             Voc1.isHidden = false
             Voc2.isHidden = false
             flag = 2
-            EnglishTxT.fontColor = SKColor.gray
+            LanguagesTxT.fontColor = SKColor.gray
         }else if Back.contains(touchLocation) && flag >= 1{
                 flag = flag - 1
 
                 switch flag{
                     
-                case 0: FrancaisTxT.fontColor = SKColor.black
+                case 0: LanguagesTxT.fontColor = SKColor.black
                         SelectLanguageProf.isHidden = false
                         SelectLanguageStudent.isHidden = true
                         Back.isHidden = true
                     
-                case 1: EnglishTxT.fontColor = SKColor.black
+                case 1: LanguagesTxT.fontColor = SKColor.black
                         EnglishVoc.isHidden = true
                         Voc1.isHidden = true
                         Voc2.isHidden = true
@@ -186,13 +189,13 @@ class MenuScene: SKScene {
                         GO.isHidden = true
                         flag = flag - 1
                     
-                case 10:EnglishTxT.fontColor = SKColor.black
+                case 10:LanguagesTxT.fontColor = SKColor.black
                         SelectLanguageProf.isHidden = false
                         SelectLanguageStudent.isHidden = true
                         Back.isHidden = true
                         flag = flag - 10
                     
-                case 11:FrancaisTxT.fontColor = SKColor.black
+                case 11:LanguagesTxT.fontColor = SKColor.black
                         FrancaisVoc.isHidden = true
                         Voc3.isHidden = true
                         Voc4.isHidden = true
@@ -209,19 +212,19 @@ class MenuScene: SKScene {
                     flag = flag + 0
                 }
         }
-        if EnglishTxT.contains(touchLocation)  && flag == 0 {
+        if LanguagesTxT.contains(touchLocation)  && flag == 0 {
             SelectLanguageStudent.isHidden = false
             SelectLanguageProf.isHidden = true
             flag = 11
             Back.isHidden = false
-            EnglishTxT.fontColor = SKColor.gray
+            LanguagesTxT.fontColor = SKColor.gray
 
-        }else if FrancaisTxT.contains(touchLocation)  && flag == 11 {
+        }else if LanguagesTxT.contains(touchLocation)  && flag == 11 {
             FrancaisVoc.isHidden = false
             Voc3.isHidden = false
             Voc4.isHidden = false
             flag = 12
-            FrancaisTxT.fontColor = SKColor.gray
+            LanguagesTxT.fontColor = SKColor.gray
 
         }else if Voc1.contains(touchLocation) && flag == 2{
             flag = 3
