@@ -20,14 +20,21 @@ class MenuScene: SKScene {
     let Voc2 = SKLabelNode()
     let Voc3 = SKLabelNode()
     let Voc4 = SKLabelNode()
-    var LanguagesTxT = SKLabelNode(fontNamed: "Arial-Bold")
+    var LanguagesTxT = SKLabelNode()
     let Back = SKLabelNode()
     let GO = SKLabelNode()
     let button = UIButton(type: UIButtonType.system) as UIButton
-    var i:Int = 0
-    var LanguagesX:Int = 300
-    var LanguagesY:Int = 300
-    
+    var x:Int = 1
+    var y:Int = 0
+    var b:Int = 0
+    var LanguagesX:Int = 200
+    var LanguagesY:Int = 250
+    var MyWords = [SKLabelNode]()
+    var Word = SKLabelNode()
+    var label = SKLabelNode()
+    var LanguageProf:Int = 0
+    var Id:Int = 0
+    var buttons = [UIButton]()
     override init(size: CGSize) {
         super.init(size: size)
         
@@ -43,25 +50,51 @@ class MenuScene: SKScene {
         SelectLanguageProf.position = CGPoint(x: size.width / 4.5, y: size.height / 1.75)
         addChild(SelectLanguageProf)
         
+        var buttonY: CGFloat = 200
         
-        for var x in 0..<VocProvider().Languages.count {
-            var line = ""
-            for var y in 0..<VocProvider().Languages[x].count {
-                var label = LanguagesTxT.copy() as! SKLabelNode
-                line += String(VocProvider().Languages[x][y])
-                line += " "
-                LanguagesTxT.fontSize = 28
-                LanguagesTxT.fontColor = SKColor.black
-                LanguagesTxT.text = line
-                LanguagesTxT.position = CGPoint(x: LanguagesX , y: LanguagesY)
-                self.addChild(label)
-                LanguagesX = LanguagesX + 50
-                LanguagesY = LanguagesY + 50
-            }
-        }
+        let button = SKSpriteNode(color: SKColor.blue, size: CGSize(width: 100, height: 100))
+        button.position = CGPoint(x: size.width / 6.5, y: size.height / 1.2)
+        button.isUserInteractionEnabled = true
+        button.name = "BOUTTON1"
+        LanguagesTxT = SKLabelNode(fontNamed: "Arial")
+        LanguagesTxT.text = "button"
+        LanguagesTxT.fontSize = 20
+        LanguagesTxT.position = CGPoint(x: size.width / 6.5, y: size.height / 1.2)
+        button.name = "LABEL1"
+        let BOUTTON1 = self.childNode(withName, name: "//BOUTTON1")
+        let LABEL1 = self.childNode(withName, name: "//LABEL1")
         
+        self.addChild(LanguagesTxT)
+        self.addChild(button)
+        
+        /*for word in VocProvider().Languages[1]{
+            let button = SKSpriteNode(color: SKColor.blue, size: CGSize(width: 100, height: 100))
+            button.position = CGPoint(x: size.width / 6, y: size.height / 1.55)
+            button.isUserInteractionEnabled = true
+            button.value()
+            self.addChild(button)
+            let btn = UIButton(frame: CGRect(x: 200, y: buttonY, width: 450, height: 30))
+            buttonY = buttonY + 50
+            btn.backgroundColor = UIColor.darkGray
+            btn.setTitle(word, for: UIControlState.normal)
+            btn.addTarget(self, action: Selector(("btnPressed")), for: UIControlEvents.touchUpInside)
+            btn.titleLabel?.text = word
+            buttons.append(btn)
+            self.view?.addSubview(btn)
+            /*var line = ""
+            label = LanguagesTxT.copy() as! SKLabelNode
+            line += String(VocProvider().Languages[1][x])
+            line += " "
+            label.fontName = "Arial-Bold"
+            label.fontSize = 28
+            label.fontColor = SKColor.black
+            label.text = line
+            label.position = CGPoint(x: LanguagesX , y: LanguagesY)
 
-
+            MyWords.append(label)
+            addChild(label)
+            LanguagesY = LanguagesY + 50*/
+        }*/
         //Select language of the student
         SelectLanguageStudent.fontSize = 30
         SelectLanguageStudent.fontColor = SKColor.black
@@ -70,60 +103,6 @@ class MenuScene: SKScene {
         SelectLanguageStudent.position = CGPoint(x: size.width / 4.5, y: size.height / 1.75)
         addChild(SelectLanguageStudent)
         SelectLanguageStudent.isHidden = true
-        
-        //English Vocabulary
-        EnglishVoc.fontSize = 30
-        EnglishVoc.fontColor = SKColor.black
-        EnglishVoc.fontName = "Arial-Bold"
-        EnglishVoc.text = "Vocabulaire Français"
-        EnglishVoc.position = CGPoint(x: size.width / 1.35, y: size.height / 1.75)
-        addChild(EnglishVoc)
-        EnglishVoc.isHidden = true
-        
-        //French Vocabulary
-        FrancaisVoc.fontSize = 30
-        FrancaisVoc.fontColor = SKColor.black
-        FrancaisVoc.fontName = "Arial-Bold"
-        FrancaisVoc.text = "English Vocabulary"
-        FrancaisVoc.position = CGPoint(x: size.width / 1.35, y: size.height / 1.75)
-        addChild(FrancaisVoc)
-        FrancaisVoc.isHidden = true
-        
-        //Voc 1 (English)
-        Voc1.fontSize = 28
-        Voc1.fontColor = SKColor.black
-        Voc1.fontName = "Arial-Bold"
-        Voc1.text = "Voc.1"
-        Voc1.position = CGPoint(x: size.width / 1.35, y: size.height / 2.1)
-        addChild(Voc1)
-        Voc1.isHidden = true
-        
-        //Voc 2 (English)
-        Voc2.fontSize = 28
-        Voc2.fontColor = SKColor.black
-        Voc2.fontName = "Arial-Bold"
-        Voc2.text = "Voc.2"
-        Voc2.position = CGPoint(x: size.width / 1.35, y: size.height / 2.6)
-        addChild(Voc2)
-        Voc2.isHidden = true
-        
-        //Voc 3 (French)
-        Voc3.fontSize = 28
-        Voc3.fontColor = SKColor.black
-        Voc3.fontName = "Arial-Bold"
-        Voc3.text = "Voc.3"
-        Voc3.position = CGPoint(x: size.width / 1.35, y: size.height / 2.1)
-        addChild(Voc3)
-        Voc3.isHidden = true
-
-        //Voc 4 (French)
-        Voc4.fontSize = 28
-        Voc4.fontColor = SKColor.black
-        Voc4.fontName = "Arial-Bold"
-        Voc4.text = "Voc.4"
-        Voc4.position = CGPoint(x: size.width / 1.35, y: size.height / 2.6)
-        addChild(Voc4)
-        Voc4.isHidden = true
 
         //GO
         GO.fontSize = 40
@@ -134,7 +113,7 @@ class MenuScene: SKScene {
         addChild(GO)
         GO.isHidden = true
         
-        if flag == 0{
+        if Id == 0{
             Back.isHidden = true
         }
         Back.fontSize = 28
@@ -148,26 +127,62 @@ class MenuScene: SKScene {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    /*[yourButton addTarget:self
+    action:@selector(methodTouchDown:)
+    forControlEvents:UIControlEventTouchDown];
+    
+    [yourButton addTarget:self
+    action:@selector(methodTouchUpInside:)
+    forControlEvents: UIControlEventTouchUpInside];
+    
+    -(void)methodTouchDown:(id)sender{
+    
+    NSLog(@"TouchDown");
+    }
+    -(void)methodTouchUpInside:(id)sender{
+    
+    NSLog(@"TouchUpInside");
+    }*/
+    func btnPressed(sender:UIButton!) {
+        
+        if sender.titleLabel?.text != nil {
+            print("\(String(describing: sender.titleLabel?.text))")
+        } else {
+            
+            print("error")
+            
+        }
+        
+    }
+    /*override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
         //Si FR(Flag 1) + ENG(Flag 2) -> Voc 1 et 2 ENG, Si ENG(Flag 11 + FR (Flag 12) -> Voc 3 et 4 FR
         //Si Voc 1 -> Flag 3, Voc 2 -> Flag 4, Voc 3 -> Flag 13, Voc 4 -> Flag 14
-        if LanguagesTxT.contains(touchLocation)  && flag == 0 {
+        if Id <= 1{
+            for word in MyWords {
+                if word.contains(touchLocation) && Id == 0{
+                    SelectLanguageStudent.isHidden = false
+                    SelectLanguageProf.isHidden = true
+                    Back.isHidden = false
+                    LanguageProf = Int(VocProvider().Languages[0][b])!
+                    Id = Id + 1
+                    b = 0
+                }else if word.contains(touchLocation) && Id == 1{
+                    LanguageEleve = Int(VocProvider().Languages[0][b])!
+                    EnglishVoc.isHidden = false
+                    b = 0
+                    Id = Id + 1
+                }
+            }
+        }*/
+        
+        /*if LanguageId == 1{
             SelectLanguageStudent.isHidden = false
             SelectLanguageProf.isHidden = true
-            Back.isHidden = false
-            flag = 1
-            LanguagesTxT.fontColor = SKColor.gray
-            
-        }else if LanguagesTxT.contains(touchLocation) && flag == 1{
-            EnglishVoc.isHidden = false
-            Voc1.isHidden = false
-            Voc2.isHidden = false
-            flag = 2
-            LanguagesTxT.fontColor = SKColor.gray
-        }else if Back.contains(touchLocation) && flag >= 1{
-                flag = flag - 1
+        }
+        if Back.contains(touchLocation) && Id >= 1{
+                Id = Id - 1
 
                 switch flag{
                     
@@ -251,8 +266,6 @@ class MenuScene: SKScene {
             let gameScene = GameScene(size: self.size)
             self.view?.presentScene(gameScene, transition: reveal)
         }
-    }
+    }*/
 }
-
-//}
 
