@@ -23,6 +23,7 @@ class GameScene: SKScene {
     let MoveRight = SKSpriteNode()
     let MoveLeft = SKSpriteNode()
     let StopMove = SKSpriteNode()
+    let MoveUp = SKSpriteNode()
     var Box = SKSpriteNode(imageNamed: "WordCase")
     var BoxX = SKSpriteNode()
     let Box1 = SKSpriteNode(imageNamed: "WordCase")
@@ -46,8 +47,6 @@ class GameScene: SKScene {
     var WordCase = SKSpriteNode(imageNamed: "WordCase.png")
     var VocWordStudentCase = SKSpriteNode()
     var TeacherSelected:String = ""
-   
-    
     // Screen width.
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
@@ -134,6 +133,13 @@ class GameScene: SKScene {
         StopMove.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
         self.addChild(StopMove)
         
+        MoveUp.color = SKColor.orange
+        MoveUp.position = CGPoint(x: size.width / 2 , y: size.height/1.45)
+        MoveUp.size = CGSize(width: size.width, height: size.height/1.2)
+        MoveUp.name = "MoveUp"; // set the name for your sprite
+        MoveUp.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
+        self.addChild(MoveUp)
+        
         /*for _ in 0...5
         {
             VocWordStudentCase = WordCase.copy() as! SKSpriteNode
@@ -171,26 +177,37 @@ class GameScene: SKScene {
         for touch in (touches) {
             let positionInScene = touch.location(in: self)
             let touchedNode = self.atPoint(positionInScene)
+            var TeacherPos:Int = Int(Teacher.position.x)
+            let moveLeft: SKAction = SKAction.moveBy(x: -1, y: 0, duration: 5)
+            let moveRight: SKAction = SKAction.moveBy(x: 1, y: 0, duration: 5)
+            let moveUp: SKAction = SKAction.moveBy(x: 0, y: 1, duration: 5)
+            
             if let name = touchedNode.name {
                 
-                if name == "MoveLeft" {
-                    while TeacherX > 90{
-                    TeacherX = TeacherX - 5
-                    let moveAction: SKAction = SKAction.moveBy(x: -5, y: 0, duration: 15)
-                    Teacher.run(moveAction)
-                    PaperPlane.run(moveAction)}
-                }
-                
-                if name == "MoveRight" {
-                    while TeacherX < 920{
-                    TeacherX += 5
-                    let moveAction: SKAction = SKAction.moveBy(x: 5, y: 0, duration: 15)
-                    Teacher.run(moveAction)
-                    PaperPlane.run(moveAction)
+                outerLoop: while name == true {
+                    Teacher.removeAllActions()
+                    PaperPlane.removeAllActions()
+                    if TeacherX >= 90
+                    {
+                        TeacherX = TeacherX - 1
+                        Teacher.run(moveLeft)
+                        PaperPlane.run(moveLeft)
+                        TeacherPos = Int(Teacher.position.x)
+                    }else{
+                        name = false
                     }
                 }
-                
-                if name == "StopMove" {
+                }else if name == "MoveRight" {
+                    Teacher.removeAllActions()
+                    PaperPlane.removeAllActions()
+                    while TeacherX <= 920
+                    {
+                        TeacherX += 1
+                        Teacher.run(moveRight)
+                        PaperPlane.run(moveRight)
+                        TeacherPos = Int(Teacher.position.x)
+                    }
+                }else if name == "StopMove" {
                     Teacher.removeAllActions()
                     PaperPlane.removeAllActions()
                 }
