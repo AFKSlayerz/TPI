@@ -112,28 +112,28 @@ class GameScene: SKScene {
         Box4.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
         self.addChild(Box4)
         
-        MoveRight.color = SKColor.green
+        MoveRight.color = SKColor.white
         MoveRight.position = CGPoint(x: size.width / 0.9, y: size.height/5)
         MoveRight.size = CGSize(width: size.width/1.4, height: size.height/8)
         MoveRight.name = "MoveRight"; // set the name for your sprite
         MoveRight.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
         self.addChild(MoveRight)
         
-        MoveLeft.color = SKColor.blue
+        MoveLeft.color = SKColor.white
         MoveLeft.position = CGPoint(x: size.width / 8 , y: size.height/5)
         MoveLeft.size = CGSize(width: size.width / 4.1, height: size.height/8)
         MoveLeft.name = "MoveLeft"; // set the name for your sprite
         MoveLeft.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
         self.addChild(MoveLeft)
         
-        StopMove.color = SKColor.gray
+        StopMove.color = SKColor.white
         StopMove.position = CGPoint(x: size.width / 2 , y: size.height/5)
         StopMove.size = CGSize(width: size.width / 2, height: size.height/8)
         StopMove.name = "StopMove"; // set the name for your sprite
         StopMove.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
         self.addChild(StopMove)
         
-        MoveUp.color = SKColor.orange
+        MoveUp.color = SKColor.white
         MoveUp.position = CGPoint(x: size.width / 2 , y: size.height/1.45)
         MoveUp.size = CGSize(width: size.width, height: size.height/1.2)
         MoveUp.name = "MoveUp"; // set the name for your sprite
@@ -173,6 +173,7 @@ class GameScene: SKScene {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in (touches) {
             let positionInScene = touch.location(in: self)
@@ -181,35 +182,67 @@ class GameScene: SKScene {
             let moveLeft: SKAction = SKAction.moveBy(x: -1, y: 0, duration: 5)
             let moveRight: SKAction = SKAction.moveBy(x: 1, y: 0, duration: 5)
             let moveUp: SKAction = SKAction.moveBy(x: 0, y: 1, duration: 5)
-            
             if let name = touchedNode.name {
                 
-                outerLoop: while name == true {
-                    Teacher.removeAllActions()
-                    PaperPlane.removeAllActions()
-                    if TeacherX >= 90
-                    {
-                        TeacherX = TeacherX - 1
+                while  TeacherX > 80 {
+                    if(name == "MoveLeft") {
+                        
                         Teacher.run(moveLeft)
                         PaperPlane.run(moveLeft)
-                        TeacherPos = Int(Teacher.position.x)
-                    }else{
-                        name = false
+                        TeacherX = TeacherX - 1
+
+                        print("TP", Teacher.position.x)
+                        print(TeacherX)
+                    } else {
+                        print("TP", Teacher.position.x)
+                        print(TeacherX)
+                        break;
                     }
+                    
                 }
-                }else if name == "MoveRight" {
-                    Teacher.removeAllActions()
-                    PaperPlane.removeAllActions()
-                    while TeacherX <= 920
-                    {
+                while TeacherX < 920 {
+                    if(name == "MoveRight") {
+                        
+
                         TeacherX += 1
                         Teacher.run(moveRight)
                         PaperPlane.run(moveRight)
-                        TeacherPos = Int(Teacher.position.x)
+                        
+                        print("TP", Teacher.position.x)
+                        print(TeacherX)
+                    } else {
+                        
+                        print("TP", Teacher.position.x)
+                        print(TeacherX)
+                        break;
                     }
-                }else if name == "StopMove" {
+                }
+                if(name == "MoveUp")
+                {
+                    PaperPlane.removeAllActions()
+                    Teacher.removeAllActions()
+                    TeacherX = Int(Teacher.position.x)
+                }
+                while PaperPlaneY < 950 {
+                    if(name == "MoveUp") {
+                     
+                        PaperPlane.run(moveUp)
+                        PaperPlaneY+=1
+                        
+                        print("PPY", PaperPlane.position.y)
+                        print(PaperPlaneY)
+                    }else{
+                        break;
+                    }
+                }
+                
+                if name == "StopMove"
+                {
                     Teacher.removeAllActions()
                     PaperPlane.removeAllActions()
+                    TeacherX = Int(Teacher.position.x)
+                }else{
+                    break;
                 }
             }
         }
@@ -217,7 +250,6 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
-
         for word in MyVocWordStudent {
             if word.contains(touchLocation){
                 TeacherSelected = word.text!
