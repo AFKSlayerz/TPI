@@ -8,23 +8,32 @@
 
 import UIKit
 import SpriteKit
+var StudentNum = 1
 
 class GameScene: SKScene {
+    let RowsOfStudent = 2
+    var StudentSPeed = 2
+    let leftBounds = CGFloat(30)
+    var rightBounds = CGFloat(0)
+    var StudentWhoCanFire:[Student] = []
+    let teacher:Teacher = Teacher()
     
+    let Background = SKSpriteNode(imageNamed: "Background.jpg")
     let Voc1Eng = SKLabelNode()
     let Voc2Eng = SKLabelNode()
     let Voc3Eng = SKLabelNode()
     let Voc4Eng = SKLabelNode()
     let Error = SKLabelNode()
     let Back = SKLabelNode()
-    let Student = SKSpriteNode(imageNamed: "Student.png")
-    let Teacher = SKSpriteNode(imageNamed: "Teacher.png")
     let PaperPlane = SKSpriteNode(imageNamed: "PaperPlane.png")
-    let PaperPlane2 = SKSpriteNode(imageNamed: "PaperPlane.png")
     let MoveRight = SKSpriteNode()
     let MoveLeft = SKSpriteNode()
     let StopMove = SKSpriteNode()
     let MoveUp = SKSpriteNode()
+    
+    var TemporaryStudent = SKSpriteNode()
+    var MyTempStudent = [SKSpriteNode]()
+    
     var Box = SKSpriteNode(imageNamed: "WordCase")
     var BoxX = SKSpriteNode()
     let Box1 = SKSpriteNode(imageNamed: "WordCase")
@@ -63,7 +72,8 @@ class GameScene: SKScene {
         let moveLeft: SKAction = SKAction.moveBy(x: -4, y: 0, duration: 1)
         let moveRight: SKAction = SKAction.moveBy(x: 4, y: 0, duration: 1)
         let moveUp: SKAction = SKAction.moveBy(x: 0, y: 50, duration: 1)
-        if PaperPlaneM == 1 && PaperPlane.position.y < 800{
+        MoveStudent()
+        /*if PaperPlaneM == 1 && PaperPlane.position.y < 800{
             PaperPlane.run(moveUp)
             
         }else{
@@ -89,10 +99,68 @@ class GameScene: SKScene {
                 
             }
        
+        }*/
+        
+    }
+    func setupStudent(){
+        var StudentRow = 0;
+        var StudentColumn = 0;
+        let NumberOfStudent = StudentNum * 2 + 2
+        let o = 1
+        let j = 1
+        for  oi in o...RowsOfStudent {
+            StudentRow = oi
+            for  oj in j...NumberOfStudent {
+                StudentColumn = oj
+                let tempStudent:Student = Student()
+                let StudentHalfWidth:CGFloat = tempStudent.size.width/2
+                let xPositionStart:CGFloat = size.width/2 - StudentHalfWidth - (CGFloat(StudentNum) * tempStudent.size.width) + CGFloat(30)
+                tempStudent.position = CGPoint(x:xPositionStart  + ((tempStudent.size.width+CGFloat(30))*(CGFloat(oj-1))), y:CGFloat(self.size.height - CGFloat(oi) * 80))
+                tempStudent.size = CGSize(width: 60, height: 80)
+                tempStudent.StudentRow = StudentRow
+                tempStudent.StudentColumn = StudentColumn
+                addChild(tempStudent)
+                if(oi == RowsOfStudent){
+                StudentWhoCanFire.append(tempStudent)
+                }
+            }
+        }
+    }
+    
+    func setupTeacher(){
+        teacher.position = CGPoint(x:TeacherX, y:TeacherY)
+        teacher.size = CGSize(width: 60, height: 80)
+        addChild(teacher)
+    }
+    
+    func MoveStudent(){
+        var changeDirection = false
+        enumerateChildNodes(withName: "Student") { node, stop in
+            let student = node as! SKSpriteNode
+            let StudentHalfWidth = student.size.width/2
+            student.position.x -= CGFloat(self.StudentSPeed)
+            if(student.position.x > self.rightBounds - StudentHalfWidth || student.position.x < self.leftBounds + StudentHalfWidth){
+                changeDirection = true
+            }
+            
+        }
+        
+        if(changeDirection == true){
+            self.StudentSPeed *= -1
+            self.enumerateChildNodes(withName: "Student") { node, stop in
+                let student = node as! SKSpriteNode
+                student.position.y -= CGFloat(46)
+            }
+            changeDirection = false
         }
         
     }
-    
+    override func didMove(to view: SKView) {
+        backgroundColor = SKColor.black
+        rightBounds = self.size.width - 30
+        setupStudent()
+        setupTeacher()
+    }
     override init(size: CGSize) {
         super.init(size: size)
         
@@ -101,25 +169,14 @@ class GameScene: SKScene {
         PaperPlaneX = Int(screenWidth) / 2
         PaperPlaneY = Int(screenHeight) / 3
         
-        let moveLeft = SKAction.moveBy(x: 900, y: 0, duration: 10)
-        let sequence = SKAction.sequence([moveLeft, moveLeft.reversed()])
+        
         
         backgroundColor = SKColor.white
         
-        Student.position = CGPoint(x: 50, y: size.height / 1.1)  //The game will be built from the top-left
-        Student.size = CGSize(width: 80, height: 90)  //The anchor point (top left)
-        addChild(Student)
         
-        PaperPlane2.position = CGPoint(x: 300, y: 300)
-        PaperPlane2.size = CGSize(width: 50, height: 80)
-        self.addChild(PaperPlane2)
-        
-        
-        Student.run(SKAction.repeatForever(sequence), withKey:  "moving")
-
-        Teacher.position = CGPoint(x: TeacherX, y: TeacherY)  //The game will be built from the top-left
+        /*Teacher.position = CGPoint(x: TeacherX, y: TeacherY)  //The game will be built from the top-left
         Teacher.size = CGSize(width: 80, height: 90)  //The anchor point (top left)
-        addChild(Teacher)
+        addChild(Teacher)*/
         
         PaperPlane.position = CGPoint(x: PaperPlaneX, y: PaperPlaneY)
         PaperPlane.size = CGSize(width: 50, height: 80)
@@ -131,6 +188,11 @@ class GameScene: SKScene {
         Back.text = "Retour"
         Back.position = CGPoint(x: size.width / 1.04, y: size.height / 1.035)
         addChild(Back)
+        
+        /*Background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        Background.size = CGSize(width: 1024, height: 900)
+        Background.zPosition = 0
+        self.addChild(Background)*/
         
         Box1.position = CGPoint(x: size.width / 9, y: 50)
         Box1.size = CGSize(width: 200, height: 85)
@@ -219,7 +281,7 @@ class GameScene: SKScene {
         for touch in (touches) {
             let positionInScene = touch.location(in: self)
             let touchedNode = self.atPoint(positionInScene)
-            var TeacherPos:Int = Int(Teacher.position.x)
+            //var TeacherPos:Int = Int(Teacher.position.x)
             if let name = touchedNode.name {
                 
                 switch name{

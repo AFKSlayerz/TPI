@@ -16,11 +16,17 @@
 		9746F87720A3003300DEC427 /* School_InvadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746F87620A3003300DEC427 /* School_InvadersTests.swift */; };
 		97557E9220AD8BD6001359EA /* VocProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97557E9120AD8BD6001359EA /* VocProvider.swift */; };
 		977FB64D20AAC28900CA884A /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977FB64C20AAC28900CA884A /* MenuScene.swift */; };
+		9783023A20BE9439004C995B /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9783023920BE9439004C995B /* Student.swift */; };
+		9783023E20BE9609004C995B /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9783023D20BE9609004C995B /* Teacher.swift */; };
+		9783024020BE98B1004C995B /* Teacher1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9783023F20BE98B1004C995B /* Teacher1.png */; };
+		9783024220BE98B9004C995B /* Teacher2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9783024120BE98B9004C995B /* Teacher2.png */; };
+		9783024420BE9D10004C995B /* Student1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9783024320BE9D10004C995B /* Student1.png */; };
+		9783024620BE9D41004C995B /* Student2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9783024520BE9D41004C995B /* Student2.png */; };
+		9783024820BE9E7B004C995B /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9783024720BE9E7B004C995B /* Background.jpg */; };
+		9783024A20BEAD83004C995B /* PlaneSong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9783024920BEAD83004C995B /* PlaneSong.mp3 */; };
 		97DBB92A20AC2BA500610D0F /* Student.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92920AC2BA500610D0F /* Student.png */; };
 		97DBB92C20AC2BAC00610D0F /* Teacher.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92B20AC2BAC00610D0F /* Teacher.png */; };
 		97DBB92E20AC374300610D0F /* PaperPlane.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92D20AC374300610D0F /* PaperPlane.png */; };
-		97DBB93120AC3B2800610D0F /* Student2.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB93020AC3B2800610D0F /* Student2.png */; };
-		97DBB93320AC3B2F00610D0F /* Student3.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB93220AC3B2F00610D0F /* Student3.png */; };
 		97DBB93520AC3BA800610D0F /* StudentWalk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DBB93420AC3BA800610D0F /* StudentWalk.swift */; };
 		97E993F420BD80E30030A444 /* PaperPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E993F320BD80E30030A444 /* PaperPlane.swift */; };
 /* End PBXBuildFile section */
@@ -49,11 +55,17 @@
 		9746F87820A3003300DEC427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97557E9120AD8BD6001359EA /* VocProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocProvider.swift; sourceTree = "<group>"; };
 		977FB64C20AAC28900CA884A /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		9783023920BE9439004C995B /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		9783023D20BE9609004C995B /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
+		9783023F20BE98B1004C995B /* Teacher1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Teacher1.png; sourceTree = "<group>"; };
+		9783024120BE98B9004C995B /* Teacher2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Teacher2.png; sourceTree = "<group>"; };
+		9783024320BE9D10004C995B /* Student1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Student1.png; sourceTree = "<group>"; };
+		9783024520BE9D41004C995B /* Student2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Student2.png; sourceTree = "<group>"; };
+		9783024720BE9E7B004C995B /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
+		9783024920BEAD83004C995B /* PlaneSong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PlaneSong.mp3; sourceTree = "<group>"; };
 		97DBB92920AC2BA500610D0F /* Student.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Student.png; sourceTree = "<group>"; };
 		97DBB92B20AC2BAC00610D0F /* Teacher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Teacher.png; sourceTree = "<group>"; };
 		97DBB92D20AC374300610D0F /* PaperPlane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PaperPlane.png; sourceTree = "<group>"; };
-		97DBB93020AC3B2800610D0F /* Student2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Student2.png; sourceTree = "<group>"; };
-		97DBB93220AC3B2F00610D0F /* Student3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Student3.png; sourceTree = "<group>"; };
 		97DBB93420AC3BA800610D0F /* StudentWalk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentWalk.swift; sourceTree = "<group>"; };
 		97E993F320BD80E30030A444 /* PaperPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPlane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +111,8 @@
 		9746F85A20A3003200DEC427 /* School Invaders */ = {
 			isa = PBXGroup;
 			children = (
+				9783023D20BE9609004C995B /* Teacher.swift */,
+				9783023920BE9439004C995B /* Student.swift */,
 				9746F85B20A3003200DEC427 /* AppDelegate.swift */,
 				9746F86120A3003200DEC427 /* GameScene.swift */,
 				97E993F320BD80E30030A444 /* PaperPlane.swift */,
@@ -125,9 +139,13 @@
 		977FB64920AAC10500CA884A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9783024920BEAD83004C995B /* PlaneSong.mp3 */,
+				9783024720BE9E7B004C995B /* Background.jpg */,
+				9783024520BE9D41004C995B /* Student2.png */,
+				9783024320BE9D10004C995B /* Student1.png */,
+				9783024120BE98B9004C995B /* Teacher2.png */,
+				9783023F20BE98B1004C995B /* Teacher1.png */,
 				97289F0C20B6B78F0055580E /* WordCase.png */,
-				97DBB93220AC3B2F00610D0F /* Student3.png */,
-				97DBB93020AC3B2800610D0F /* Student2.png */,
 				97DBB92920AC2BA500610D0F /* Student.png */,
 				97DBB92B20AC2BAC00610D0F /* Teacher.png */,
 				97DBB92D20AC374300610D0F /* PaperPlane.png */,
@@ -217,12 +235,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				97DBB92A20AC2BA500610D0F /* Student.png in Resources */,
-				97DBB93320AC3B2F00610D0F /* Student3.png in Resources */,
+				9783024820BE9E7B004C995B /* Background.jpg in Resources */,
 				9746F86720A3003200DEC427 /* Main.storyboard in Resources */,
-				97DBB93120AC3B2800610D0F /* Student2.png in Resources */,
+				9783024220BE98B9004C995B /* Teacher2.png in Resources */,
+				9783024420BE9D10004C995B /* Student1.png in Resources */,
 				97DBB92C20AC2BAC00610D0F /* Teacher.png in Resources */,
 				97DBB92E20AC374300610D0F /* PaperPlane.png in Resources */,
 				9746F86920A3003300DEC427 /* Assets.xcassets in Resources */,
+				9783024020BE98B1004C995B /* Teacher1.png in Resources */,
+				9783024620BE9D41004C995B /* Student2.png in Resources */,
+				9783024A20BEAD83004C995B /* PlaneSong.mp3 in Resources */,
 				97289F0D20B6B7900055580E /* WordCase.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,7 +269,9 @@
 				97E993F420BD80E30030A444 /* PaperPlane.swift in Sources */,
 				97557E9220AD8BD6001359EA /* VocProvider.swift in Sources */,
 				9746F86420A3003200DEC427 /* GameViewController.swift in Sources */,
+				9783023E20BE9609004C995B /* Teacher.swift in Sources */,
 				9746F85C20A3003200DEC427 /* AppDelegate.swift in Sources */,
+				9783023A20BE9439004C995B /* Student.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,17 +5,22 @@
 //  Created by Mikel Harnisch on 29.05.18.
 //  Copyright © 2018 Mikel & Co. All rights reserved.
 //
-import SpriteKit
 import UIKit
-class PaperPlane:GameScene {
-    
-    func CreatePP() {
-        
-        let newPlane = SKSpriteNode(imageNamed: "PaperPlane.png")
-        newPlane.position = CGPoint(x: PaperPlaneX, y: PaperPlaneY)
-        newPlane.size = CGSize(width: 50, height: 80)
-        self.addChild(newPlane)
+import SpriteKit
 
+class Bullet: SKSpriteNode {
+    
+    
+    init(imageName: String, bulletSound: String?) {
+        let texture = SKTexture(imageNamed: imageName)
+        super.init(texture: texture, color: SKColor.clear, size: texture.size())
+        if(bulletSound != nil){
+            run(SKAction.playSoundFileNamed(bulletSound!, waitForCompletion: false))
+        }
     }
     
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }
