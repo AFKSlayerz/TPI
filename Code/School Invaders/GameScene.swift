@@ -20,6 +20,7 @@ class GameScene: SKScene {
     let Student = SKSpriteNode(imageNamed: "Student.png")
     let Teacher = SKSpriteNode(imageNamed: "Teacher.png")
     let PaperPlane = SKSpriteNode(imageNamed: "PaperPlane.png")
+    let PaperPlane2 = SKSpriteNode(imageNamed: "PaperPlane.png")
     let MoveRight = SKSpriteNode()
     let MoveLeft = SKSpriteNode()
     let StopMove = SKSpriteNode()
@@ -47,7 +48,7 @@ class GameScene: SKScene {
     var WordCase = SKSpriteNode(imageNamed: "WordCase.png")
     var VocWordStudentCase = SKSpriteNode()
     var TeacherSelected:String = ""
-    // Screen width.
+        // Screen width.
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
     }
@@ -56,7 +57,10 @@ class GameScene: SKScene {
     public var screenHeight: CGFloat {
         return UIScreen.main.bounds.height
     }
-    
+    override func update(_ currentTime: TimeInterval) {
+        let test: SKAction = SKAction.moveBy(x: 5, y: 0, duration: 5)
+        PaperPlane2.run(test)
+    }
     override init(size: CGSize) {
         super.init(size: size)
         
@@ -73,6 +77,10 @@ class GameScene: SKScene {
         Student.size = CGSize(width: 80, height: 90)  //The anchor point (top left)
         addChild(Student)
         
+        PaperPlane2.position = CGPoint(x: 300, y: 300)
+        PaperPlane2.size = CGSize(width: 50, height: 80)
+        self.addChild(PaperPlane2)
+        
         
         Student.run(SKAction.repeatForever(sequence), withKey:  "moving")
 
@@ -80,9 +88,9 @@ class GameScene: SKScene {
         Teacher.size = CGSize(width: 80, height: 90)  //The anchor point (top left)
         addChild(Teacher)
         
-        PaperPlane.position = CGPoint(x: PaperPlaneX, y: PaperPlaneY)  //The game will be built from the top-left
-        PaperPlane.size = CGSize(width: 50, height: 80)  //The anchor point (top left)
-        addChild(PaperPlane)
+        PaperPlane.position = CGPoint(x: PaperPlaneX, y: PaperPlaneY)
+        PaperPlane.size = CGSize(width: 50, height: 80)
+        self.addChild(PaperPlane)
         
         Back.fontSize = 24
         Back.fontColor = SKColor.black
@@ -181,7 +189,7 @@ class GameScene: SKScene {
             var TeacherPos:Int = Int(Teacher.position.x)
             let moveLeft: SKAction = SKAction.moveBy(x: -1, y: 0, duration: 5)
             let moveRight: SKAction = SKAction.moveBy(x: 1, y: 0, duration: 5)
-            let moveUp: SKAction = SKAction.moveBy(x: 0, y: 1, duration: 5)
+            let moveUp: SKAction = SKAction.moveBy(x: 0, y: 600, duration: 5)
             if let name = touchedNode.name {
                 
                 while  TeacherX > 80 {
@@ -221,21 +229,12 @@ class GameScene: SKScene {
                 {
                     PaperPlane.removeAllActions()
                     Teacher.removeAllActions()
-                    TeacherX = Int(Teacher.position.x)
+                    PaperPlane.run(moveUp)
+                   
+                    self.PaperPlane.run(moveUp)
+                    TeacherX = Int(self.Teacher.position.x)
+                    
                 }
-                while PaperPlaneY < 950 {
-                    if(name == "MoveUp") {
-                     
-                        PaperPlane.run(moveUp)
-                        PaperPlaneY+=1
-                        
-                        print("PPY", PaperPlane.position.y)
-                        print(PaperPlaneY)
-                    }else{
-                        break;
-                    }
-                }
-                
                 if name == "StopMove"
                 {
                     Teacher.removeAllActions()

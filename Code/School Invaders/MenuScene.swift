@@ -162,7 +162,6 @@ class MenuScene: SKScene {
         
         //If the student language is chosen
         if flag == 1{
-            flag = 2
             for word in MyWords {
                 if word.contains(touchLocation){
                     SelectLanguageStudent.isHidden = false
@@ -173,13 +172,14 @@ class MenuScene: SKScene {
                     //Test2.isHidden = false
                     //Test2.text = String(LanguageEleve)
                     ChooseVoc.isHidden = false
+                    print(flag)
+                    flag = 2
                 }
             }
         }
         
         //If the professor language is chosen
         if flag == 0{
-            flag = 1
             for word in MyWords {
                 if word.contains(touchLocation){
                     SelectLanguageStudent.isHidden = false
@@ -189,10 +189,13 @@ class MenuScene: SKScene {
                     LanguageProf = Int(VocProvider().Languages[0][z])!
                     //Test1.isHidden = false
                     //Test1.text = String(LanguageProf)
+                    flag = 1
+                    print(flag)
+
                 }
             }
         }
-        
+        print(flag)
         //if the professor and student language are chosen
         if flag == 2{
             for _ in VocProvider().Vocabulary[0]
@@ -215,10 +218,11 @@ class MenuScene: SKScene {
                     MyVocs.append(Voc)
                     addChild(Voc)
                     VocY = VocY - 80
+                    flag = 3
                 }
                 i+=1
             }
-            flag = 3
+            
         }
         
         if flag == 1{
@@ -245,7 +249,7 @@ class MenuScene: SKScene {
             self.view?.presentScene(gameScene, transition: reveal)
         }
         
-        /*if Back.contains(touchLocation) && flag >= 1{
+        if Back.contains(touchLocation) && flag >= 1{
             flag-=1
                 switch flag{
             
@@ -254,6 +258,6 @@ class MenuScene: SKScene {
                 default:
                     flag = flag + 0
                 }
-        }*/
+        }
     }
 }
