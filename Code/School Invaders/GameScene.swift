@@ -48,6 +48,8 @@ class GameScene: SKScene {
     var WordCase = SKSpriteNode(imageNamed: "WordCase.png")
     var VocWordStudentCase = SKSpriteNode()
     var TeacherSelected:String = ""
+    var TeacherM = 5
+    var PaperPlaneM = 0
         // Screen width.
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
@@ -58,9 +60,39 @@ class GameScene: SKScene {
         return UIScreen.main.bounds.height
     }
     override func update(_ currentTime: TimeInterval) {
-        let test: SKAction = SKAction.moveBy(x: 5, y: 0, duration: 5)
-        PaperPlane2.run(test)
+        let moveLeft: SKAction = SKAction.moveBy(x: -4, y: 0, duration: 1)
+        let moveRight: SKAction = SKAction.moveBy(x: 4, y: 0, duration: 1)
+        let moveUp: SKAction = SKAction.moveBy(x: 0, y: 50, duration: 1)
+        if PaperPlaneM == 1 && PaperPlane.position.y < 800{
+            PaperPlane.run(moveUp)
+            
+        }else{
+            PaperPlaneM = 0
+            switch TeacherM{
+            case 0 :
+                PaperPlane.removeAllActions()
+                Teacher.removeAllActions()
+            case 1:
+                if  Teacher.position.x > 60
+                {
+                    Teacher.run(moveLeft)
+                    PaperPlane.run(moveLeft)
+                }
+            case 2 :
+                if  Teacher.position.x < 950
+                {
+                    Teacher.run(moveRight)
+                    PaperPlane.run(moveRight)
+                }
+            default:
+                break;
+                
+            }
+       
+        }
+        
     }
+    
     override init(size: CGSize) {
         super.init(size: size)
         
@@ -68,6 +100,7 @@ class GameScene: SKScene {
         TeacherY = Int(screenHeight) / 5
         PaperPlaneX = Int(screenWidth) / 2
         PaperPlaneY = Int(screenHeight) / 3
+        
         let moveLeft = SKAction.moveBy(x: 900, y: 0, duration: 10)
         let sequence = SKAction.sequence([moveLeft, moveLeft.reversed()])
         
@@ -187,60 +220,18 @@ class GameScene: SKScene {
             let positionInScene = touch.location(in: self)
             let touchedNode = self.atPoint(positionInScene)
             var TeacherPos:Int = Int(Teacher.position.x)
-            let moveLeft: SKAction = SKAction.moveBy(x: -1, y: 0, duration: 5)
-            let moveRight: SKAction = SKAction.moveBy(x: 1, y: 0, duration: 5)
-            let moveUp: SKAction = SKAction.moveBy(x: 0, y: 600, duration: 5)
             if let name = touchedNode.name {
                 
-                while  TeacherX > 80 {
-                    if(name == "MoveLeft") {
-                        
-                        Teacher.run(moveLeft)
-                        PaperPlane.run(moveLeft)
-                        TeacherX = TeacherX - 1
-
-                        print("TP", Teacher.position.x)
-                        print(TeacherX)
-                    } else {
-                        print("TP", Teacher.position.x)
-                        print(TeacherX)
-                        break;
-                    }
+                switch name{
                     
-                }
-                while TeacherX < 920 {
-                    if(name == "MoveRight") {
-                        
-
-                        TeacherX += 1
-                        Teacher.run(moveRight)
-                        PaperPlane.run(moveRight)
-                        
-                        print("TP", Teacher.position.x)
-                        print(TeacherX)
-                    } else {
-                        
-                        print("TP", Teacher.position.x)
-                        print(TeacherX)
-                        break;
-                    }
-                }
-                if(name == "MoveUp")
-                {
-                    PaperPlane.removeAllActions()
-                    Teacher.removeAllActions()
-                    PaperPlane.run(moveUp)
-                   
-                    self.PaperPlane.run(moveUp)
-                    TeacherX = Int(self.Teacher.position.x)
+                case "MoveLeft": TeacherM = 1
                     
-                }
-                if name == "StopMove"
-                {
-                    Teacher.removeAllActions()
-                    PaperPlane.removeAllActions()
-                    TeacherX = Int(Teacher.position.x)
-                }else{
+                case "MoveRight": TeacherM = 2
+                    
+                case "MoveUp": PaperPlaneM = 1
+                    
+                case "StopMove": TeacherM = 0
+                default:
                     break;
                 }
             }
