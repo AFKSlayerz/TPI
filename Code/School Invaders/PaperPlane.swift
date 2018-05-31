@@ -8,17 +8,14 @@
 import UIKit
 import SpriteKit
 
-class Bullet: SKSpriteNode {
+class PaperPlane: SKSpriteNode {
     
     
-    init(imageName: String, bulletSound: String?) {
-        let texture = SKTexture(imageNamed: imageName)
+    init() {
+        let texture = SKTexture(imageNamed: "PaperPlane.png")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
-        if(bulletSound != nil){
-            run(SKAction.playSoundFileNamed(bulletSound!, waitForCompletion: false))
-        }
+        self.name = "PaperPlane"
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

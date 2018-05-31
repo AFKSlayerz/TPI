@@ -17,6 +17,7 @@ class MenuScene: SKScene {
     let SelectLanguageProf = SKLabelNode()
     let Test1 = SKLabelNode()
     let Test2 = SKLabelNode()
+    let Background = SKSpriteNode(imageNamed: "Background.jpg")
     var Voc = SKLabelNode()
     var LanguagesTxT = SKLabelNode()
     var VocTxT = SKLabelNode()
@@ -64,8 +65,13 @@ class MenuScene: SKScene {
         SelectLanguageProf.fontName = "Arial-Bold"
         SelectLanguageProf.text = "Teacher language"
         SelectLanguageProf.position = CGPoint(x: size.width / 4.5, y: size.height / 1.75)
+        SelectLanguageProf.zPosition = 1
         addChild(SelectLanguageProf)
         
+        Background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        Background.size = CGSize(width: 1024, height: 900)
+        Background.zPosition = 0
+        self.addChild(Background)
         
         for _ in VocProvider().Languages[1]{
             var line = ""
@@ -77,6 +83,7 @@ class MenuScene: SKScene {
             label.text = line
             label.fontColor = SKColor.black
             label.position = CGPoint(x: LanguagesX , y: LanguagesY)
+            label.zPosition = 1
             var z = Int(LabelId)!
             z+=1
             LabelId = String(z)
@@ -92,42 +99,16 @@ class MenuScene: SKScene {
         SelectLanguageStudent.fontName = "Arial-Bold"
         SelectLanguageStudent.text = "Student language"
         SelectLanguageStudent.position = CGPoint(x: size.width / 4.5, y: size.height / 1.75)
+        SelectLanguageStudent.zPosition = 2
         addChild(SelectLanguageStudent)
         SelectLanguageStudent.isHidden = true
-        /*
-        Test1.fontSize = 40
-        Test1.fontColor = SKColor.black
-        Test1.fontName = "Arial-Bold"
-        Test1.text = "English Voc"
-        Test1.position = CGPoint(x: size.width / 1.05, y: size.height / 1.75)
-        addChild(Test1)
-        Test1.isHidden = true*/
-        
-        /*
-        Test2.fontSize = 40
-        Test2.fontColor = SKColor.black
-        Test2.fontName = "Arial-Bold"
-        Test2.text = "Francais Voc"
-        Test2.position = CGPoint(x: size.width / 1.05, y: size.height / 2.1)
-        addChild(Test2)
-        Test2.isHidden = true
-        */
-        
-        
-         Test2.fontSize = 40
-         Test2.fontColor = SKColor.black
-         Test2.fontName = "Arial-Bold"
-         Test2.text = "Francais Voc"
-         Test2.position = CGPoint(x: size.width / 1.05, y: size.height / 2.1)
-         addChild(Test2)
-         Test2.isHidden = true
-        
-        
+    
         ChooseVoc.fontSize = 45
         ChooseVoc.fontColor = SKColor.black
         ChooseVoc.fontName = "Arial-Bold"
         ChooseVoc.text = "Choose a vocabulary"
         ChooseVoc.position = CGPoint(x: size.width / 1.35, y: size.height / 1.75)
+        ChooseVoc.zPosition = 1
         addChild(ChooseVoc)
         ChooseVoc.isHidden = true
         
@@ -137,6 +118,7 @@ class MenuScene: SKScene {
         GO.fontName = "Arial-Bold"
         GO.text = "GO !"
         GO.position = CGPoint(x: size.width / 2, y: size.height / 10)
+        GO.zPosition = 1
         addChild(GO)
         GO.isHidden = true
         
@@ -149,6 +131,7 @@ class MenuScene: SKScene {
         Back.fontName = "Arial-Bold"
         Back.text = "Retour"
         Back.position = CGPoint(x: size.width / 12, y: size.height / 1.1)
+        Back.zPosition = 1
         addChild(Back)
     }
     
@@ -213,6 +196,7 @@ class MenuScene: SKScene {
                     Voc.fontColor = SKColor.black
                     Voc.text = line
                     Voc.position = CGPoint(x: Int(VocX) , y: VocY)
+                    Voc.zPosition = 1
                     VocId = String(i)
                     Voc.name = VocId
                     MyVocs.append(Voc)
@@ -253,7 +237,13 @@ class MenuScene: SKScene {
             flag-=1
                 switch flag{
             
-                case 2: GO.isHidden = true
+                case 2: MyVocs = []
+                        MyWords = []
+                        i = 0
+                    
+                    
+                case 3: GO.isHidden = true
+                        
                 
                 default:
                     flag = flag + 0

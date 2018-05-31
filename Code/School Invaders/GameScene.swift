@@ -11,12 +11,19 @@ import SpriteKit
 var StudentNum = 1
 
 class GameScene: SKScene {
+    var SetupPP = 0
+    var canFire = false
     let RowsOfStudent = 2
     var StudentSPeed = 2
+    var abcSpeed = 2
+    var BoxSpeed = 2
+
+    var OnOff = 0
     let leftBounds = CGFloat(30)
     var rightBounds = CGFloat(0)
     var StudentWhoCanFire:[Student] = []
     let teacher:Teacher = Teacher()
+    let paperPlane:PaperPlane = PaperPlane()
     
     let Background = SKSpriteNode(imageNamed: "Background.jpg")
     let Voc1Eng = SKLabelNode()
@@ -25,7 +32,6 @@ class GameScene: SKScene {
     let Voc4Eng = SKLabelNode()
     let Error = SKLabelNode()
     let Back = SKLabelNode()
-    let PaperPlane = SKSpriteNode(imageNamed: "PaperPlane.png")
     let MoveRight = SKSpriteNode()
     let MoveLeft = SKSpriteNode()
     let StopMove = SKSpriteNode()
@@ -36,6 +42,9 @@ class GameScene: SKScene {
     
     var Box = SKSpriteNode(imageNamed: "WordCase")
     var BoxX = SKSpriteNode()
+    var Boxes = SKSpriteNode(imageNamed: "WordCase")
+    var Boxe = SKSpriteNode()
+    var BoxBox = [SKSpriteNode]()
     let Box1 = SKSpriteNode(imageNamed: "WordCase")
     let Box2 = SKSpriteNode(imageNamed: "WordCase")
     let Box3 = SKSpriteNode(imageNamed: "WordCase")
@@ -44,8 +53,12 @@ class GameScene: SKScene {
     var VocWordTxT = SKLabelNode()
     var VocWordStudent = SKLabelNode()
     var MyVocWordStudent = [SKLabelNode]()
+    var VocWordTeacher = SKLabelNode()
+    var MyVocWordTeacher = [SKLabelNode]()
     var Test = SKLabelNode()
     var i:Int = 0
+    var z:Int = 0
+    var x:Int = 0
     var VocX:Int = 110
     var VocY:Int = 30
     var WordX:Int = 85
@@ -59,6 +72,9 @@ class GameScene: SKScene {
     var TeacherSelected:String = ""
     var TeacherM = 5
     var PaperPlaneM = 0
+    
+    var TestTxT = SKLabelNode()
+    var abc = SKLabelNode()
         // Screen width.
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
@@ -69,70 +85,99 @@ class GameScene: SKScene {
         return UIScreen.main.bounds.height
     }
     override func update(_ currentTime: TimeInterval) {
-        let moveLeft: SKAction = SKAction.moveBy(x: -4, y: 0, duration: 1)
-        let moveRight: SKAction = SKAction.moveBy(x: 4, y: 0, duration: 1)
-        let moveUp: SKAction = SKAction.moveBy(x: 0, y: 50, duration: 1)
+        let moveLeft: SKAction = SKAction.moveBy(x: -1, y: 0, duration: 0.1)
+        let moveRight: SKAction = SKAction.moveBy(x: 1, y: 0, duration: 0.1)
+        let moveUp: SKAction = SKAction.moveBy(x: 0, y: 5, duration: 0.1)
         MoveStudent()
-        /*if PaperPlaneM == 1 && PaperPlane.position.y < 800{
-            PaperPlane.run(moveUp)
-            
+        MoveText()
+        MoveBox()
+        setupPaperPlane()
+        paperPlane.position = CGPoint(x: teacher.position.x, y: teacher.position.y + 80)
+        if PaperPlaneM == 1 && paperPlane.position.y < 800{
+            firePaperPlane()
+
         }else{
             PaperPlaneM = 0
             switch TeacherM{
             case 0 :
-                PaperPlane.removeAllActions()
-                Teacher.removeAllActions()
+                break;
             case 1:
-                if  Teacher.position.x > 60
+                if  teacher.position.x > 60
                 {
-                    Teacher.run(moveLeft)
-                    PaperPlane.run(moveLeft)
+                    teacher.run(moveLeft)
+                    paperPlane.run(moveLeft)
                 }
             case 2 :
-                if  Teacher.position.x < 950
+                if  teacher.position.x < 950
                 {
-                    Teacher.run(moveRight)
-                    PaperPlane.run(moveRight)
+                    teacher.run(moveRight)
+                    paperPlane.run(moveRight)
                 }
             default:
                 break;
                 
             }
        
-        }*/
+        }
         
     }
+    //Create Student on the field
     func setupStudent(){
-        var StudentRow = 0;
+        let StudentRow = 0;
         var StudentColumn = 0;
-        let NumberOfStudent = StudentNum * 2 + 2
-        let o = 1
-        let j = 1
-        for  oi in o...RowsOfStudent {
-            StudentRow = oi
-            for  oj in j...NumberOfStudent {
-                StudentColumn = oj
-                let tempStudent:Student = Student()
-                let StudentHalfWidth:CGFloat = tempStudent.size.width/2
-                let xPositionStart:CGFloat = size.width/2 - StudentHalfWidth - (CGFloat(StudentNum) * tempStudent.size.width) + CGFloat(30)
-                tempStudent.position = CGPoint(x:xPositionStart  + ((tempStudent.size.width+CGFloat(30))*(CGFloat(oj-1))), y:CGFloat(self.size.height - CGFloat(oi) * 80))
-                tempStudent.size = CGSize(width: 60, height: 80)
-                tempStudent.StudentRow = StudentRow
-                tempStudent.StudentColumn = StudentColumn
-                addChild(tempStudent)
-                if(oi == RowsOfStudent){
-                StudentWhoCanFire.append(tempStudent)
-                }
-            }
+
+        for word in MyVocWordStudent {
+            StudentColumn = Int(word.name!)!
+            var line = ""
+            abc = TestTxT.copy() as! SKLabelNode
+            line += word.text!
+            line += " "
+            abc.fontName = "Arial-Bold"
+            abc.fontSize = 25
+            abc.fontColor = SKColor.black
+            abc.text = line
+            abc.name = "abc"
+            abc.zPosition = 4
+            BoxX = Box.copy() as! SKSpriteNode
+            BoxX.name = "BoxX"
+            BoxX.size = CGSize(width: 120, height: 40)
+            BoxX.zPosition = 3
+            let tempStudent:Student = Student()
+            let StudentHalfWidth:CGFloat = tempStudent.size.width/2
+            let xPositionStart:CGFloat = size.width/2 - StudentHalfWidth - (CGFloat(StudentNum) * tempStudent.size.width) + CGFloat(30)
+            tempStudent.position = CGPoint(x:xPositionStart  + ((tempStudent.size.width+CGFloat(120))*(CGFloat(Int(word.name!)!-1))), y:CGFloat(self.size.height - 80))
+            abc.position = CGPoint(x:xPositionStart  + ((tempStudent.size.width+CGFloat(120))*(CGFloat(Int(word.name!)!-1))), y:CGFloat(self.size.height - 100))
+            tempStudent.size = CGSize(width: 60, height: 80)
+            BoxX.position = CGPoint(x:xPositionStart  + ((tempStudent.size.width+CGFloat(90))*(CGFloat(Int(word.name!)!-1))), y:CGFloat(self.size.height - 90))
+            tempStudent.size = CGSize(width: 90, height: 120)
+            tempStudent.StudentRow = StudentRow
+            tempStudent.StudentColumn = StudentColumn
+            tempStudent.zPosition = 1
+            addChild(tempStudent)
+            addChild(abc)
+            addChild(BoxX)
         }
     }
-    
+    //Create teacher on the field
     func setupTeacher(){
         teacher.position = CGPoint(x:TeacherX, y:TeacherY)
         teacher.size = CGSize(width: 60, height: 80)
+        teacher.zPosition = 2
         addChild(teacher)
     }
-    
+    func setupPaperPlane()
+    {
+        if SetupPP == 1 {
+            paperPlane.size = CGSize(width: 50, height: 80)
+            paperPlane.position = CGPoint(x: teacher.position.x, y: teacher.position.y + 80)
+            paperPlane.zPosition = 2
+            self.addChild(paperPlane)
+            SetupPP = 0
+            print(teacher.position.x)
+            print(paperPlane.position.x)
+        }else{return}
+    }
+    //Move Student from left to right
     func MoveStudent(){
         var changeDirection = false
         enumerateChildNodes(withName: "Student") { node, stop in
@@ -144,7 +189,7 @@ class GameScene: SKScene {
             }
             
         }
-        
+        //Move Student from left to right
         if(changeDirection == true){
             self.StudentSPeed *= -1
             self.enumerateChildNodes(withName: "Student") { node, stop in
@@ -154,6 +199,69 @@ class GameScene: SKScene {
             changeDirection = false
         }
         
+    }
+    func MoveText(){
+        var changeDirection = false
+        enumerateChildNodes(withName: "abc") { node, stop in
+            let abc = node as! SKLabelNode
+            abc.position.x -= CGFloat(self.abcSpeed)
+            if(abc.position.x > self.rightBounds - 45 || abc.position.x < self.leftBounds + 45){
+                changeDirection = true
+            }
+            
+        }
+        //Move Student from left to right
+        if(changeDirection == true){
+            self.abcSpeed *= -1
+            self.enumerateChildNodes(withName: "abc") { node, stop in
+                let abc = node as! SKLabelNode
+                abc.position.y -= CGFloat(46)
+            }
+            changeDirection = false
+        }
+        
+    }
+    func MoveBox(){
+        var changeDirection = false
+        enumerateChildNodes(withName: "BoxX") { node, stop in
+            let BoxX = node as! SKSpriteNode
+            BoxX.position.x -= CGFloat(self.BoxSpeed)
+            if(BoxX.position.x > self.rightBounds - 45 || BoxX.position.x < self.leftBounds + 45){
+                changeDirection = true
+            }
+            
+        }
+        //Move Student from left to right
+        if(changeDirection == true){
+            self.BoxSpeed *= -1
+            self.enumerateChildNodes(withName: "BoxX") { node, stop in
+                let BoxX = node as! SKSpriteNode
+                BoxX.position.y -= CGFloat(46)
+            }
+            changeDirection = false
+        }
+        
+    }
+    
+    func firePaperPlane(){
+        if canFire == false{
+            return
+        }else{
+            canFire = false
+            PaperPlaneM = 0
+            let moveBulletAction = SKAction.move(to: CGPoint(x:paperPlane.position.x,y: paperPlane.position.y + 600), duration: 1.0)
+            let removeBulletAction = SKAction.removeFromParent()
+            paperPlane.run(SKAction.sequence([moveBulletAction,removeBulletAction]))
+            Test.removeFromParent()
+            OnOff = 0
+        }
+    }
+    private func animate(){
+        var TeacherTextures:[SKTexture] = []
+        for i in 1...2 {
+            TeacherTextures.append(SKTexture(imageNamed: "Teacher\(i)"))
+        }
+        let TeacherAnimation = SKAction.repeatForever( SKAction.animate(with: TeacherTextures, timePerFrame: 0.5))
     }
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.black
@@ -178,42 +286,19 @@ class GameScene: SKScene {
         Teacher.size = CGSize(width: 80, height: 90)  //The anchor point (top left)
         addChild(Teacher)*/
         
-        PaperPlane.position = CGPoint(x: PaperPlaneX, y: PaperPlaneY)
-        PaperPlane.size = CGSize(width: 50, height: 80)
-        self.addChild(PaperPlane)
-        
         Back.fontSize = 24
         Back.fontColor = SKColor.black
         Back.fontName = "Arial-Bold"
         Back.text = "Retour"
+        Back.name = "Back"
+        Back.zPosition = 4
         Back.position = CGPoint(x: size.width / 1.04, y: size.height / 1.035)
         addChild(Back)
         
-        /*Background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        Background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         Background.size = CGSize(width: 1024, height: 900)
         Background.zPosition = 0
-        self.addChild(Background)*/
-        
-        Box1.position = CGPoint(x: size.width / 9, y: 50)
-        Box1.size = CGSize(width: 200, height: 85)
-        Box1.name = "Box1"; // set the name for your sprite
-        Box1.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
-        self.addChild(Box1)
-        Box2.position = CGPoint(x: size.width / 2.7, y: 50)
-        Box2.size = CGSize(width: 200, height: 85)
-        Box2.name = "Box2"; // set the name for your sprite
-        Box2.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
-        self.addChild(Box2)
-        Box3.position = CGPoint(x: size.width / 1.6, y: 50)
-        Box3.size = CGSize(width: 200, height: 85)
-        Box3.name = "Box3"; // set the name for your sprite
-        Box3.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
-        self.addChild(Box3)
-        Box4.position = CGPoint(x: size.width / 1.12, y: 50)
-        Box4.size = CGSize(width: 200, height: 85)
-        Box4.name = "Box4"; // set the name for your sprite
-        Box4.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
-        self.addChild(Box4)
+        self.addChild(Background)
         
         MoveRight.color = SKColor.white
         MoveRight.position = CGPoint(x: size.width / 0.9, y: size.height/5)
@@ -243,32 +328,54 @@ class GameScene: SKScene {
         MoveUp.isUserInteractionEnabled = false; // userInteractionEnabled should be disabled
         self.addChild(MoveUp)
         
-        /*for _ in 0...5
-        {
-            VocWordStudentCase = WordCase.copy() as! SKSpriteNode
-            VocWordStudentCase.size = CGSize(width: 150, height: 75)
-            VocWordStudentCase.position = CGPoint(x: WordX , y: WordY)
-            addChild(VocWordStudentCase)
-            WordX += 170
-        }*/
         for vocid in VocProvider().VocWords[3]{
             if ChosenVoc == Int(vocid)
             {
                 var line = ""
                 VocWordStudent = VocWordTxT.copy() as! SKLabelNode
-                line += String(VocProvider().VocWords[1][i])
+                line += String(VocProvider().VocWords[1][x])
                 line += " "
-                VocWordStudent.zPosition = 1
+                VocWordStudent.zPosition = 2
                 VocWordStudent.fontName = "Arial-Bold"
-                VocWordStudent.fontSize = 50
+                VocWordStudent.fontSize = 25
                 VocWordStudent.fontColor = SKColor.black
                 VocWordStudent.text = line
-                VocWordStudent.position = CGPoint(x: VocX , y: VocY)
+                VocWordStudent.name = String(x)
                 MyVocWordStudent.append(VocWordStudent)
                 addChild(VocWordStudent)
+            }
+            x+=1
+        }
+        
+        for vocid in VocProvider().VocWords[3]{
+            if ChosenVoc == Int(vocid)
+            {
+                var line = ""
+                var line2 = ""
+                VocWordTeacher = VocWordTxT.copy() as! SKLabelNode
+                Boxe = Boxes.copy() as! SKSpriteNode
+                line += String(VocProvider().VocWords[2][z])
+                line += " "
+                line2 += String(VocProvider().VocWords[0][z])
+                line2 += " "
+                Boxe.zPosition = 1
+                Boxe.size = CGSize(width: 200, height: 85)
+                Boxe.position = CGPoint(x: VocX, y: VocY + 20)
+                Boxe.name = line2
+                VocWordTeacher.zPosition = 2
+                VocWordTeacher.fontName = "Arial-Bold"
+                VocWordTeacher.fontSize = 30
+                VocWordTeacher.fontColor = SKColor.black
+                VocWordTeacher.text = line
+                VocWordTeacher.name = line2
+                VocWordTeacher.position = CGPoint(x: VocX , y: VocY + 10)
+                BoxBox.append(Boxe)
+                MyVocWordTeacher.append(VocWordTeacher)
+                addChild(Boxe)
+                addChild(VocWordTeacher)
                 VocX = VocX + 270
             }
-            i+=1
+            z+=1
         }
         
     }
@@ -293,31 +400,53 @@ class GameScene: SKScene {
                 case "MoveUp": PaperPlaneM = 1
                     
                 case "StopMove": TeacherM = 0
+                
+                case "Back":
+                    flag = 0
+                    let reveal = SKTransition.doorsOpenVertical(withDuration: 0.5)
+                    let menuScene = MenuScene(size: self.size)
+                    self.view?.presentScene(menuScene, transition: reveal)
+                    
                 default:
                     break;
                 }
             }
+            
         }
+        
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
-        for word in MyVocWordStudent {
-            if word.contains(touchLocation){
-                TeacherSelected = word.text!
-                Test.fontSize = 24
-                Test.fontColor = SKColor.black
-                Test.fontName = "Arial-Bold"
-                Test.text = TeacherSelected
-                Test.position = CGPoint(x: size.width / 2, y: size.height / 2)
-                addChild(Test)
+        for box in BoxBox
+        {
+            var BoxPosXR = box.position.x + 100
+            var BoxPosXL = box.position.x - 100
+            if box.contains(touchLocation)
+            {
+                if BoxPosXR > teacher.position.x && BoxPosXL < teacher.position.x
+                {
+                    if paperPlane.name  == box.name
+                    {
+                        return
+                    }
+                    else
+                    {
+                        paperPlane.name = box.name
+                        canFire = true
+                        SetupPP = 1
+                        Test.fontSize = 24
+                        Test.fontColor = SKColor.black
+                        Test.fontName = "Arial-Bold"
+                        Test.text = box.name
+                        Test.position = CGPoint(x: size.width / 2, y: size.height / 2)
+                        Test.zPosition = 5
+                        OnOff = 1
+                        addChild(Test)
+                    }
+                }
+                
             }
-        }
-        if Back.contains(touchLocation) {
-            flag = 0
-            let reveal = SKTransition.doorsOpenVertical(withDuration: 0.5)
-            let menuScene = MenuScene(size: self.size)
-            self.view?.presentScene(menuScene, transition: reveal)
         }
     }
 }
