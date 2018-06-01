@@ -18,7 +18,13 @@ class Student: SKSpriteNode {
         let texture = SKTexture(imageNamed: "Student1.png")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
         self.name = "Student"
+        self.physicsBody = SKPhysicsBody(circleOfRadius: 200)
+        self.physicsBody!.isDynamic = true
+        self.physicsBody!.categoryBitMask = CollisionCategories.Student
+        self.physicsBody!.contactTestBitMask = CollisionCategories.TeacherBullet | CollisionCategories.Teacher
+        self.physicsBody!.collisionBitMask = 0x0
         animate()
+
     }
     private func animate(){
         var StudentTextures:[SKTexture] = []

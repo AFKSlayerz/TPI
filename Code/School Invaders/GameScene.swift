@@ -10,7 +10,13 @@ import UIKit
 import SpriteKit
 var StudentNum = 1
 
-class GameScene: SKScene {
+struct CollisionCategories{
+    static let Student : UInt32 = 0x1 << 0          //1
+    static let Teacher: UInt32 = 0x1 << 1       //2
+    static let TeacherBullet: UInt32 = 0x1 << 2         //4
+}
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     var SetupPP = 0
     var canFire = false
     let RowsOfStudent = 2
@@ -45,6 +51,7 @@ class GameScene: SKScene {
     var Boxes = SKSpriteNode(imageNamed: "WordCase")
     var Boxe = SKSpriteNode()
     var BoxBox = [SKSpriteNode]()
+    var MyBox = [SKSpriteNode]()
     let Box1 = SKSpriteNode(imageNamed: "WordCase")
     let Box2 = SKSpriteNode(imageNamed: "WordCase")
     let Box3 = SKSpriteNode(imageNamed: "WordCase")
@@ -59,6 +66,7 @@ class GameScene: SKScene {
     var i:Int = 0
     var z:Int = 0
     var x:Int = 0
+    var y:Int = 0
     var VocX:Int = 110
     var VocY:Int = 30
     var WordX:Int = 85
@@ -88,13 +96,31 @@ class GameScene: SKScene {
         let moveLeft: SKAction = SKAction.moveBy(x: -1, y: 0, duration: 0.1)
         let moveRight: SKAction = SKAction.moveBy(x: 1, y: 0, duration: 0.1)
         let moveUp: SKAction = SKAction.moveBy(x: 0, y: 5, duration: 0.1)
-        MoveStudent()
         MoveText()
         MoveBox()
+        MoveStudent()
         setupPaperPlane()
         paperPlane.position = CGPoint(x: teacher.position.x, y: teacher.position.y + 80)
-        if PaperPlaneM == 1 && paperPlane.position.y < 800{
+        if PaperPlaneM == 1 && paperPlane.position.y < 600{
             firePaperPlane()
+            /*for BoxX in MyBox{
+                var BoxXR = BoxX.position.x + 80
+                var BoxXL = BoxX.position.x - 80
+                if BoxX.position.y < self.paperPlane.position.y && BoxXR + 80 > self.paperPlane.position.x && BoxXL - 80 < self.paperPlane.position.x{
+                    if BoxX.accessibilityLabel == self.paperPlane.name
+                    {
+                        print("i win")
+                        PaperPlaneM == 0
+                    }else{
+                        print("student move")
+                        PaperPlaneM == 0
+                    }
+                }else{
+                    print("i loose ahah")
+                    PaperPlaneM == 0
+                }
+            }*/
+            
 
         }else{
             PaperPlaneM = 0
@@ -129,9 +155,12 @@ class GameScene: SKScene {
         for word in MyVocWordStudent {
             StudentColumn = Int(word.name!)!
             var line = ""
+            var line2 = ""
             abc = TestTxT.copy() as! SKLabelNode
             line += word.text!
             line += " "
+            line2 += String(VocProvider().VocWords[0][y])
+            line2 += " "
             abc.fontName = "Arial-Bold"
             abc.fontSize = 25
             abc.fontColor = SKColor.black
@@ -140,6 +169,7 @@ class GameScene: SKScene {
             abc.zPosition = 4
             BoxX = Box.copy() as! SKSpriteNode
             BoxX.name = "BoxX"
+            BoxX.accessibilityLabel = line2
             BoxX.size = CGSize(width: 120, height: 40)
             BoxX.zPosition = 3
             let tempStudent:Student = Student()
@@ -153,16 +183,19 @@ class GameScene: SKScene {
             tempStudent.StudentRow = StudentRow
             tempStudent.StudentColumn = StudentColumn
             tempStudent.zPosition = 1
+            MyBox.append(BoxX)
             addChild(tempStudent)
             addChild(abc)
             addChild(BoxX)
+            y+=1
         }
+        
     }
     //Create teacher on the field
     func setupTeacher(){
         teacher.position = CGPoint(x:TeacherX, y:TeacherY)
         teacher.size = CGSize(width: 60, height: 80)
-        teacher.zPosition = 2
+        teacher.zPosition = 1
         addChild(teacher)
     }
     func setupPaperPlane()
@@ -170,7 +203,7 @@ class GameScene: SKScene {
         if SetupPP == 1 {
             paperPlane.size = CGSize(width: 50, height: 80)
             paperPlane.position = CGPoint(x: teacher.position.x, y: teacher.position.y + 80)
-            paperPlane.zPosition = 2
+            paperPlane.zPosition = 1
             self.addChild(paperPlane)
             SetupPP = 0
             print(teacher.position.x)
@@ -205,7 +238,7 @@ class GameScene: SKScene {
         enumerateChildNodes(withName: "abc") { node, stop in
             let abc = node as! SKLabelNode
             abc.position.x -= CGFloat(self.abcSpeed)
-            if(abc.position.x > self.rightBounds - 45 || abc.position.x < self.leftBounds + 45){
+            if(abc.position.x > self.rightBounds - 45.1 || abc.position.x < self.leftBounds + 45){
                 changeDirection = true
             }
             
@@ -226,7 +259,7 @@ class GameScene: SKScene {
         enumerateChildNodes(withName: "BoxX") { node, stop in
             let BoxX = node as! SKSpriteNode
             BoxX.position.x -= CGFloat(self.BoxSpeed)
-            if(BoxX.position.x > self.rightBounds - 45 || BoxX.position.x < self.leftBounds + 45){
+            if(BoxX.position.x > self.rightBounds - 45.1 || BoxX.position.x < self.leftBounds + 45){
                 changeDirection = true
             }
             
@@ -264,10 +297,42 @@ class GameScene: SKScene {
         let TeacherAnimation = SKAction.repeatForever( SKAction.animate(with: TeacherTextures, timePerFrame: 0.5))
     }
     override func didMove(to view: SKView) {
+        self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
+        self.physicsWorld.contactDelegate = self
         backgroundColor = SKColor.black
         rightBounds = self.size.width - 30
         setupStudent()
         setupTeacher()
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+         print("Collisiaaaaaon")
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        //To know wich one is the first and wich one the the second body
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+            print("Collision")
+
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+            print("Collisionnnnn")
+
+        }
+        
+        if ((firstBody.categoryBitMask & CollisionCategories.Student != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.TeacherBullet != 0)){
+            print("Student et Teacher bullet contact")
+        }
+        
+        if ((firstBody.categoryBitMask & CollisionCategories.Student != 0) &&
+            (secondBody.categoryBitMask & CollisionCategories.Teacher != 0)) {
+            print("Student and Teacher contact")
+            
+        }
+        
     }
     override init(size: CGSize) {
         super.init(size: size)

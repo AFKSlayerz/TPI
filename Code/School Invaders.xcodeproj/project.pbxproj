@@ -111,11 +111,11 @@
 		9746F85A20A3003200DEC427 /* School Invaders */ = {
 			isa = PBXGroup;
 			children = (
+				97E993F320BD80E30030A444 /* PaperPlane.swift */,
 				9783023D20BE9609004C995B /* Teacher.swift */,
 				9783023920BE9439004C995B /* Student.swift */,
 				9746F85B20A3003200DEC427 /* AppDelegate.swift */,
 				9746F86120A3003200DEC427 /* GameScene.swift */,
-				97E993F320BD80E30030A444 /* PaperPlane.swift */,
 				9746F86320A3003200DEC427 /* GameViewController.swift */,
 				977FB64C20AAC28900CA884A /* MenuScene.swift */,
 				9746F86520A3003200DEC427 /* Main.storyboard */,
