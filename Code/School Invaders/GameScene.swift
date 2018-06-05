@@ -13,7 +13,7 @@ var StudentNum = 1
 struct CollisionCategories{
     static let Student : UInt32 = 0x1 << 0          //1
     static let Teacher: UInt32 = 0x1 << 1       //2
-    static let TeacherBullet: UInt32 = 0x1 << 2         //4
+    static let PaperPlane: UInt32 = 0x1 << 2         //4
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -23,28 +23,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var StudentSPeed = 2
     var abcSpeed = 2
     var BoxSpeed = 2
-
     var OnOff = 0
+    
+    var CanWord = 0
     let leftBounds = CGFloat(30)
     var rightBounds = CGFloat(0)
-    var StudentWhoCanFire:[Student] = []
     let teacher:Teacher = Teacher()
     let paperPlane:PaperPlane = PaperPlane()
     
     let Background = SKSpriteNode(imageNamed: "Background.jpg")
-    let Voc1Eng = SKLabelNode()
-    let Voc2Eng = SKLabelNode()
-    let Voc3Eng = SKLabelNode()
-    let Voc4Eng = SKLabelNode()
-    let Error = SKLabelNode()
     let Back = SKLabelNode()
     let MoveRight = SKSpriteNode()
     let MoveLeft = SKSpriteNode()
     let StopMove = SKSpriteNode()
     let MoveUp = SKSpriteNode()
-    
-    var TemporaryStudent = SKSpriteNode()
-    var MyTempStudent = [SKSpriteNode]()
     
     var Box = SKSpriteNode(imageNamed: "WordCase")
     var BoxX = SKSpriteNode()
@@ -52,11 +44,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var Boxe = SKSpriteNode()
     var BoxBox = [SKSpriteNode]()
     var MyBox = [SKSpriteNode]()
-    let Box1 = SKSpriteNode(imageNamed: "WordCase")
-    let Box2 = SKSpriteNode(imageNamed: "WordCase")
-    let Box3 = SKSpriteNode(imageNamed: "WordCase")
-    let Box4 = SKSpriteNode(imageNamed: "WordCase")
-    let GameStared:Bool = false
     var VocWordTxT = SKLabelNode()
     var VocWordStudent = SKLabelNode()
     var MyVocWordStudent = [SKLabelNode]()
@@ -77,7 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var PaperPlaneY:Int = 0
     var WordCase = SKSpriteNode(imageNamed: "WordCase.png")
     var VocWordStudentCase = SKSpriteNode()
-    var TeacherSelected:String = ""
     var TeacherM = 5
     var PaperPlaneM = 0
     
@@ -95,35 +81,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         let moveLeft: SKAction = SKAction.moveBy(x: -1, y: 0, duration: 0.1)
         let moveRight: SKAction = SKAction.moveBy(x: 1, y: 0, duration: 0.1)
-        let moveUp: SKAction = SKAction.moveBy(x: 0, y: 5, duration: 0.1)
         MoveText()
         MoveBox()
         MoveStudent()
         setupPaperPlane()
         paperPlane.position = CGPoint(x: teacher.position.x, y: teacher.position.y + 80)
+        
         if PaperPlaneM == 1 && paperPlane.position.y < 600{
-            firePaperPlane()
-            /*for BoxX in MyBox{
-                var BoxXR = BoxX.position.x + 80
-                var BoxXL = BoxX.position.x - 80
-                if BoxX.position.y < self.paperPlane.position.y && BoxXR + 80 > self.paperPlane.position.x && BoxXL - 80 < self.paperPlane.position.x{
-                    if BoxX.accessibilityLabel == self.paperPlane.name
-                    {
-                        print("i win")
-                        PaperPlaneM == 0
-                    }else{
-                        print("student move")
-                        PaperPlaneM == 0
-                    }
-                }else{
-                    print("i loose ahah")
-                    PaperPlaneM == 0
-                }
-            }*/
-            
-
+            ThrowPaperPlane()
         }else{
             PaperPlaneM = 0
+            CanWord = 0
             switch TeacherM{
             case 0 :
                 break;
@@ -141,12 +109,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             default:
                 break;
-                
             }
-       
         }
-        
+        if y == 0
+        {
+            let reveal = SKTransition.doorsOpenVertical(withDuration: 0.5)
+            let gameOver = GameOver(size: self.size)
+            self.view?.presentScene(gameOver, transition: reveal)
+        }
     }
+    
     //Create Student on the field
     func setupStudent(){
         let StudentRow = 0;
@@ -166,6 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             abc.fontColor = SKColor.black
             abc.text = line
             abc.name = "abc"
+            abc.accessibilityLabel = line2
             abc.zPosition = 4
             BoxX = Box.copy() as! SKSpriteNode
             BoxX.name = "BoxX"
@@ -183,14 +156,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             tempStudent.StudentRow = StudentRow
             tempStudent.StudentColumn = StudentColumn
             tempStudent.zPosition = 1
+            tempStudent.accessibilityLabel = line2
             MyBox.append(BoxX)
             addChild(tempStudent)
             addChild(abc)
             addChild(BoxX)
             y+=1
         }
-        
     }
+    
     //Create teacher on the field
     func setupTeacher(){
         teacher.position = CGPoint(x:TeacherX, y:TeacherY)
@@ -198,6 +172,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         teacher.zPosition = 1
         addChild(teacher)
     }
+    
+    //Create PaperPlane on the field
     func setupPaperPlane()
     {
         if SetupPP == 1 {
@@ -210,6 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print(paperPlane.position.x)
         }else{return}
     }
+    
     //Move Student from left to right
     func MoveStudent(){
         var changeDirection = false
@@ -222,7 +199,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         }
-        //Move Student from left to right
         if(changeDirection == true){
             self.StudentSPeed *= -1
             self.enumerateChildNodes(withName: "Student") { node, stop in
@@ -231,8 +207,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             changeDirection = false
         }
-        
     }
+    
+    //Move the Student's word form right to left
     func MoveText(){
         var changeDirection = false
         enumerateChildNodes(withName: "abc") { node, stop in
@@ -241,9 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(abc.position.x > self.rightBounds - 45.1 || abc.position.x < self.leftBounds + 45){
                 changeDirection = true
             }
-            
         }
-        //Move Student from left to right
         if(changeDirection == true){
             self.abcSpeed *= -1
             self.enumerateChildNodes(withName: "abc") { node, stop in
@@ -252,8 +227,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             changeDirection = false
         }
-        
     }
+    
+    //Move the Boxes containing the student's words from right to left
     func MoveBox(){
         var changeDirection = false
         enumerateChildNodes(withName: "BoxX") { node, stop in
@@ -262,9 +238,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(BoxX.position.x > self.rightBounds - 45.1 || BoxX.position.x < self.leftBounds + 45){
                 changeDirection = true
             }
-            
         }
-        //Move Student from left to right
         if(changeDirection == true){
             self.BoxSpeed *= -1
             self.enumerateChildNodes(withName: "BoxX") { node, stop in
@@ -273,29 +247,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             changeDirection = false
         }
-        
     }
     
-    func firePaperPlane(){
+    //Throw the PaperPlane
+    func ThrowPaperPlane(){
         if canFire == false{
             return
         }else{
             canFire = false
             PaperPlaneM = 0
-            let moveBulletAction = SKAction.move(to: CGPoint(x:paperPlane.position.x,y: paperPlane.position.y + 600), duration: 1.0)
-            let removeBulletAction = SKAction.removeFromParent()
-            paperPlane.run(SKAction.sequence([moveBulletAction,removeBulletAction]))
+            let ThrowPP = SKAction.move(to: CGPoint(x:paperPlane.position.x,y: paperPlane.position.y + 600), duration: 1.0)
+            let RemovePP = SKAction.removeFromParent()
+            paperPlane.run(SKAction.sequence([ThrowPP,RemovePP]))
             Test.removeFromParent()
             OnOff = 0
+            self.enumerateChildNodes(withName: "VocTeacher") {(node, stop) in
+                if let name = node.accessibilityLabel, name.contains(String(self.paperPlane.name!)) {
+                    node.isHidden = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        node.isHidden = false
+                    }
+                }
+            }
         }
     }
-    private func animate(){
-        var TeacherTextures:[SKTexture] = []
-        for i in 1...2 {
-            TeacherTextures.append(SKTexture(imageNamed: "Teacher\(i)"))
-        }
-        let TeacherAnimation = SKAction.repeatForever( SKAction.animate(with: TeacherTextures, timePerFrame: 0.5))
-    }
+    
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
         self.physicsWorld.contactDelegate = self
@@ -305,15 +281,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupTeacher()
     }
     
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
+        /*let collision:UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
          print("Collisiaaaaaon")
+        
+        if collision == CollisionCategories.Student | CollisionCategories.PaperPlane{
+            print("coll")
+        }*/
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         //To know wich one is the first and wich one the the second body
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
-            print("Collision")
 
         } else {
             firstBody = contact.bodyB
@@ -321,12 +301,65 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Collisionnnnn")
 
         }
-        
+        //Contact between the PaperPlane and the Student's Box
         if ((firstBody.categoryBitMask & CollisionCategories.Student != 0) &&
-            (secondBody.categoryBitMask & CollisionCategories.TeacherBullet != 0)){
-            print("Student et Teacher bullet contact")
+            (secondBody.categoryBitMask & CollisionCategories.PaperPlane != 0)){
+
+            self.enumerateChildNodes(withName: "abc") {(node, stop) in
+                let abcXRight = node.position.x + 50
+                let abcXLeft = node.position.x - 50
+                let difference = 720 - node.position.y
+                
+                if self.paperPlane.position.x > abcXLeft && self.paperPlane.position.x < abcXRight{
+                    if node.accessibilityLabel == self.paperPlane.name{
+                        let flip = SKAction.scaleX(to: -1, duration: 0.4)
+                        
+                        node.setScale(1.0)
+                        
+                        var RemovePP = SKAction.removeFromParent()
+                        var action = SKAction.sequence([flip, RemovePP] )
+                        
+                        node.run(action)
+                    }
+                }
+            }
+            self.enumerateChildNodes(withName: "Student") {(node, stop) in
+                let abcXRight = node.position.x + 50
+                let abcXLeft = node.position.x - 50
+                let difference = 720 - node.position.y
+                
+                if self.paperPlane.position.x > abcXLeft && self.paperPlane.position.x < abcXRight{
+                    if node.accessibilityLabel == self.paperPlane.name{
+                        
+                        let MoveStudent1 = SKAction.move(to: CGPoint(x:node.position.x,y: node.position.y + difference), duration: 1.0)
+                        let MoveStudent2 = SKAction.move(to: CGPoint(x:900,y:720), duration: 1.0)
+                        let MoveStudent3 = SKAction.move(to: CGPoint(x:900,y:360), duration: 1.0)
+                        let RemoveStudent = SKAction.removeFromParent()
+                        node.run(SKAction.sequence([MoveStudent1,MoveStudent2,MoveStudent3,RemoveStudent]))
+                        
+                    }
+                }
+            }
+            self.enumerateChildNodes(withName: "BoxX") {(node, stop) in
+                let abcXRight = node.position.x + 50
+                let abcXLeft = node.position.x - 50
+                let difference = 720 - node.position.y
+                
+                if self.paperPlane.position.x > abcXLeft && self.paperPlane.position.x < abcXRight{
+                    if node.accessibilityLabel == self.paperPlane.name{
+                        let flip = SKAction.scaleX(to: -1, duration: 0.4)
+                        
+                        node.setScale(1.0)
+                        
+                        var RemoveBox = SKAction.removeFromParent()
+                        var action = SKAction.sequence([flip, RemoveBox] )
+                        
+                        node.run(action)
+                        self.y = self.y - 1
+                    }
+                }
+            }
         }
-        
         if ((firstBody.categoryBitMask & CollisionCategories.Student != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.Teacher != 0)) {
             print("Student and Teacher contact")
@@ -426,13 +459,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 Boxe.zPosition = 1
                 Boxe.size = CGSize(width: 200, height: 85)
                 Boxe.position = CGPoint(x: VocX, y: VocY + 20)
+                Boxe.accessibilityLabel = "Boxe"
                 Boxe.name = line2
                 VocWordTeacher.zPosition = 2
                 VocWordTeacher.fontName = "Arial-Bold"
                 VocWordTeacher.fontSize = 30
                 VocWordTeacher.fontColor = SKColor.black
                 VocWordTeacher.text = line
-                VocWordTeacher.name = line2
+                VocWordTeacher.accessibilityLabel = line2
+                VocWordTeacher.name = "VocTeacher"
                 VocWordTeacher.position = CGPoint(x: VocX , y: VocY + 10)
                 BoxBox.append(Boxe)
                 MyVocWordTeacher.append(VocWordTeacher)
@@ -462,7 +497,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                 case "MoveRight": TeacherM = 2
                     
-                case "MoveUp": PaperPlaneM = 1
+                case "MoveUp": if OnOff == 1{PaperPlaneM = 1}else{return}
                     
                 case "StopMove": TeacherM = 0
                 
@@ -485,8 +520,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touchLocation = touch!.location(in: self)
         for box in BoxBox
         {
-            var BoxPosXR = box.position.x + 100
-            var BoxPosXL = box.position.x - 100
+            let BoxPosXR = box.position.x + 100
+            let BoxPosXL = box.position.x - 100
             if box.contains(touchLocation)
             {
                 if BoxPosXR > teacher.position.x && BoxPosXL < teacher.position.x
@@ -498,6 +533,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     else
                     {
                         paperPlane.name = box.name
+                        paperPlane.accessibilityLabel = paperPlane.name
                         canFire = true
                         SetupPP = 1
                         Test.fontSize = 24
@@ -507,10 +543,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         Test.position = CGPoint(x: size.width / 2, y: size.height / 2)
                         Test.zPosition = 5
                         OnOff = 1
+                        CanWord = 1
                         addChild(Test)
+                        self.enumerateChildNodes(withName: "VocTeacher") {(node, stop) in
+                            if let name = node.accessibilityLabel, name.contains(String(box.name!)) {
+                                node.isHidden = true
+                            }
+                        }
                     }
                 }
-                
             }
         }
     }

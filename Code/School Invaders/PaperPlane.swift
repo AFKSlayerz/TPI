@@ -15,11 +15,12 @@ class PaperPlane: SKSpriteNode {
         let texture = SKTexture(imageNamed: "PaperPlane.png")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
         self.name = "PaperPlane"
-        self.physicsBody = SKPhysicsBody(circleOfRadius: 50)
-        self.physicsBody!.isDynamic = true
-        self.physicsBody!.categoryBitMask = CollisionCategories.TeacherBullet
-        self.physicsBody!.contactTestBitMask = CollisionCategories.Student
-        self.physicsBody!.collisionBitMask = 0x0
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
+        self.physicsBody?.isDynamic = true
+        self.physicsBody?.usesPreciseCollisionDetection = false
+        self.physicsBody?.categoryBitMask = CollisionCategories.PaperPlane
+        self.physicsBody?.contactTestBitMask = CollisionCategories.Student
+        self.physicsBody?.collisionBitMask = 0x0
     }
     
     required init?(coder aDecoder: NSCoder) {

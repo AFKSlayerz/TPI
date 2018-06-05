@@ -17,10 +17,11 @@ class Teacher: SKSpriteNode {
         let texture = SKTexture(imageNamed: "Teacher1.png")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
         self.name = "Teacher"
-        self.physicsBody = SKPhysicsBody(circleOfRadius: 50)
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
         self.physicsBody?.isDynamic = true
+        self.physicsBody?.usesPreciseCollisionDetection = false
         self.physicsBody?.categoryBitMask = CollisionCategories.Teacher
-        self.physicsBody?.contactTestBitMask = CollisionCategories.Student
+        self.physicsBody?.contactTestBitMask = CollisionCategories.PaperPlane | CollisionCategories.Student
         self.physicsBody?.collisionBitMask = 0x0
         animate()
     }

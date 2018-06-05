@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9710C6D720C6D71700F6A49B /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9710C6D620C6D71700F6A49B /* GameOver.swift */; };
 		97289F0D20B6B7900055580E /* WordCase.png in Resources */ = {isa = PBXBuildFile; fileRef = 97289F0C20B6B78F0055580E /* WordCase.png */; };
 		9746F85C20A3003200DEC427 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746F85B20A3003200DEC427 /* AppDelegate.swift */; };
 		9746F86220A3003200DEC427 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9746F86120A3003200DEC427 /* GameScene.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9710C6D620C6D71700F6A49B /* GameOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 		97289F0C20B6B78F0055580E /* WordCase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WordCase.png; sourceTree = "<group>"; };
 		9746F85820A3003200DEC427 /* School Invaders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "School Invaders.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9746F85B20A3003200DEC427 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				9783023920BE9439004C995B /* Student.swift */,
 				9746F85B20A3003200DEC427 /* AppDelegate.swift */,
 				9746F86120A3003200DEC427 /* GameScene.swift */,
+				9710C6D620C6D71700F6A49B /* GameOver.swift */,
 				9746F86320A3003200DEC427 /* GameViewController.swift */,
 				977FB64C20AAC28900CA884A /* MenuScene.swift */,
 				9746F86520A3003200DEC427 /* Main.storyboard */,
@@ -266,6 +269,7 @@
 				97DBB93520AC3BA800610D0F /* StudentWalk.swift in Sources */,
 				9746F86220A3003200DEC427 /* GameScene.swift in Sources */,
 				977FB64D20AAC28900CA884A /* MenuScene.swift in Sources */,
+				9710C6D720C6D71700F6A49B /* GameOver.swift in Sources */,
 				97E993F420BD80E30030A444 /* PaperPlane.swift in Sources */,
 				97557E9220AD8BD6001359EA /* VocProvider.swift in Sources */,
 				9746F86420A3003200DEC427 /* GameViewController.swift in Sources */,
