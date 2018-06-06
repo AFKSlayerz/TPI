@@ -13,6 +13,7 @@ import SpriteKit
 class Teacher: SKSpriteNode {
      private var canFire = true
     
+    //Set the hit box and the touchable sprite
     init() {
         let texture = SKTexture(imageNamed: "Teacher1.png")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())

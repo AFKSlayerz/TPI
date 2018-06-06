@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "School Invaders/GameScene.swift"
-            timestampString = "549901638.273247"
+            timestampString = "549962199.029201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "didBegin(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "School Invaders/GameScene.swift"
-            timestampString = "549901638.274429"
+            timestampString = "549962199.030742"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "MoveBox()"
-            landmarkType = "7">
+            startingLineNumber = "273"
+            endingLineNumber = "273"
+            landmarkName = "GameScene"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "School Invaders/GameScene.swift"
-            timestampString = "549901638.275215"
+            timestampString = "549962199.031738"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>

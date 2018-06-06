@@ -14,6 +14,7 @@ class Student: SKSpriteNode {
     var StudentRow = 0
     var StudentColumn = 0
     
+    //Set the hit box and the touchable sprite
     init() {
         let texture = SKTexture(imageNamed: "Student1.png")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())

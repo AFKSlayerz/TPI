@@ -28,7 +28,6 @@
 		97DBB92A20AC2BA500610D0F /* Student.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92920AC2BA500610D0F /* Student.png */; };
 		97DBB92C20AC2BAC00610D0F /* Teacher.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92B20AC2BAC00610D0F /* Teacher.png */; };
 		97DBB92E20AC374300610D0F /* PaperPlane.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBB92D20AC374300610D0F /* PaperPlane.png */; };
-		97DBB93520AC3BA800610D0F /* StudentWalk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DBB93420AC3BA800610D0F /* StudentWalk.swift */; };
 		97E993F420BD80E30030A444 /* PaperPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E993F320BD80E30030A444 /* PaperPlane.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,7 +67,6 @@
 		97DBB92920AC2BA500610D0F /* Student.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Student.png; sourceTree = "<group>"; };
 		97DBB92B20AC2BAC00610D0F /* Teacher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Teacher.png; sourceTree = "<group>"; };
 		97DBB92D20AC374300610D0F /* PaperPlane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PaperPlane.png; sourceTree = "<group>"; };
-		97DBB93420AC3BA800610D0F /* StudentWalk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentWalk.swift; sourceTree = "<group>"; };
 		97E993F320BD80E30030A444 /* PaperPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPlane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,7 +122,6 @@
 				9746F86520A3003200DEC427 /* Main.storyboard */,
 				9746F86820A3003300DEC427 /* Assets.xcassets */,
 				9746F86D20A3003300DEC427 /* Info.plist */,
-				97DBB93420AC3BA800610D0F /* StudentWalk.swift */,
 				97557E9120AD8BD6001359EA /* VocProvider.swift */,
 			);
 			path = "School Invaders";
@@ -266,7 +263,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97DBB93520AC3BA800610D0F /* StudentWalk.swift in Sources */,
 				9746F86220A3003200DEC427 /* GameScene.swift in Sources */,
 				977FB64D20AAC28900CA884A /* MenuScene.swift in Sources */,
 				9710C6D720C6D71700F6A49B /* GameOver.swift in Sources */,

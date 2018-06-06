@@ -13,29 +13,33 @@ public var flag: Int = 0
 public var ChosenVoc:Int = 0
 
 class MenuScene: SKScene {
+    
+    //Initilize the static text
+    let Background = SKSpriteNode(imageNamed: "Background.jpg")
     let SelectLanguageStudent = SKLabelNode()
     let SelectLanguageProf = SKLabelNode()
-    let Test1 = SKLabelNode()
-    let Test2 = SKLabelNode()
-    let Background = SKSpriteNode(imageNamed: "Background.jpg")
-    var Voc = SKLabelNode()
-    var LanguagesTxT = SKLabelNode()
-    var VocTxT = SKLabelNode()
     let ChooseVoc = SKLabelNode()
     let Back = SKLabelNode()
     let GO = SKLabelNode()
-    let button = UIButton(type: UIButtonType.system) as UIButton
-    var x:Int = 0
-    var Id:Int = 0
-    var i:Int = 0
-    var flag:Int = 0
+
+    //Initialize dynamic text
+    var Voc = SKLabelNode()
+    var VocTxT = SKLabelNode()
+    var LanguagesTxT = SKLabelNode()
+    var Languages = SKLabelNode()
+
+    //Voc and Language array
+    var MyWords = [SKLabelNode]()
+    var MyVocs = [SKLabelNode]()
+    
+    //Incremental and position variable
     var LanguagesX:Int = 0
     var LanguagesY:Int = 0
     var VocX:Double = 0
     var VocY:Int = 0
-    var MyWords = [SKLabelNode]()
-    var MyVocs = [SKLabelNode]()
-    var label = SKLabelNode()
+    var x:Int = 0
+    var i:Int = 0
+    var flag:Int = 0
     var LanguageProf:Int = 0
     var LanguageEleve:Int = 0
     var LabelId:String = "-1"
@@ -44,22 +48,20 @@ class MenuScene: SKScene {
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
     }
-    
-    // Screen height.
     public var screenHeight: CGFloat {
         return UIScreen.main.bounds.height
     }
+    
     override init(size: CGSize) {
         super.init(size: size)
+        
         LanguagesX = Int(screenWidth) / 5
         LanguagesY = Int(screenHeight) / 2
         VocX = Double(screenWidth) / 1.4
         VocY = Int(screenHeight) / 2
         backgroundColor = SKColor.white
         
-        
-        
-        //Select language of the professor
+        //Set the Text and languages on the field
         SelectLanguageProf.fontSize = 48
         SelectLanguageProf.fontColor = SKColor.black
         SelectLanguageProf.fontName = "Arial-Bold"
@@ -75,25 +77,25 @@ class MenuScene: SKScene {
         
         for _ in VocProvider().Languages[1]{
             var line = ""
-            label = LanguagesTxT.copy() as! SKLabelNode
+            Languages = LanguagesTxT.copy() as! SKLabelNode
             line += String(VocProvider().Languages[1][x])
             line += " "
-            label.fontName = "Arial-Bold"
-            label.fontSize = 40
-            label.text = line
-            label.fontColor = SKColor.black
-            label.position = CGPoint(x: LanguagesX , y: LanguagesY)
-            label.zPosition = 1
+            Languages.fontName = "Arial-Bold"
+            Languages.fontSize = 40
+            Languages.text = line
+            Languages.fontColor = SKColor.black
+            Languages.position = CGPoint(x: LanguagesX , y: LanguagesY)
+            Languages.zPosition = 1
             var z = Int(LabelId)!
             z+=1
             LabelId = String(z)
-            label.name = LabelId
-            MyWords.append(label)
-            addChild(label)
+            Languages.name = LabelId
+            MyWords.append(Languages)
+            addChild(Languages)
             LanguagesY = LanguagesY - 80
             x+=1
         }
-        //Select language of the student
+        
         SelectLanguageStudent.fontSize = 48
         SelectLanguageStudent.fontColor = SKColor.black
         SelectLanguageStudent.fontName = "Arial-Bold"
@@ -152,8 +154,6 @@ class MenuScene: SKScene {
                     Back.isHidden = false
                     let z = Int(word.name!)!
                     LanguageEleve = Int(VocProvider().Languages[0][z])!
-                    //Test2.isHidden = false
-                    //Test2.text = String(LanguageEleve)
                     ChooseVoc.isHidden = false
                     print(flag)
                     flag = 2
@@ -170,15 +170,13 @@ class MenuScene: SKScene {
                     Back.isHidden = false
                     let z = Int(word.name!)!
                     LanguageProf = Int(VocProvider().Languages[0][z])!
-                    //Test1.isHidden = false
-                    //Test1.text = String(LanguageProf)
                     flag = 1
                     print(flag)
 
                 }
             }
         }
-        print(flag)
+        
         //if the professor and student language are chosen
         if flag == 2{
             for _ in VocProvider().Vocabulary[0]

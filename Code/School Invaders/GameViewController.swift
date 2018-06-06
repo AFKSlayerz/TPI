@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     var scene: GameScene!                       //Type : GameScene, Name : scene
     var GameInt = 0
 
-    
+    //Launch screen goes on the MenuScene
     override func viewDidLoad() {
         super.viewDidLoad()
         if let view = view as? SKView {

@@ -10,7 +10,7 @@ import SpriteKit
 
 class PaperPlane: SKSpriteNode {
     
-    
+    //Set the hit box and the touchable sprite
     init() {
         let texture = SKTexture(imageNamed: "PaperPlane.png")
         super.init(texture: texture, color: SKColor.clear, size: texture.size())
