@@ -336,6 +336,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         let action = SKAction.sequence([flip, RemovePP] )
                         
                         node.run(action)
+                    }else{
+                        let MoveForward = SKAction.move(to: CGPoint(x:node.position.x,y: node.position.y - 50), duration: 0.1)
+                        
+                        node.run(MoveForward)
                     }
                 }
             }
@@ -353,6 +357,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         let RemoveStudent = SKAction.removeFromParent()
                         node.run(SKAction.sequence([MoveStudent1,MoveStudent2,MoveStudent3,RemoveStudent]))
                         
+                    }else {
+                    let MoveForward = SKAction.move(to: CGPoint(x:node.position.x,y: node.position.y - 50), duration: 0.1)
+                    
+                    node.run(MoveForward)
                     }
                 }
             }
@@ -371,10 +379,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                         node.run(action)
                         self.AliveStudent = self.AliveStudent - 1
+                    }else {
+                        let MoveForward = SKAction.move(to: CGPoint(x:node.position.x,y: node.position.y - 50), duration: 0.1)
+                        
+                        node.run(MoveForward)
                     }
                 }
             }
         }
+        
         //Contact between the student and the teacher
         if ((firstBody.categoryBitMask & CollisionCategories.Student != 0) &&
             (secondBody.categoryBitMask & CollisionCategories.Teacher != 0)) {
