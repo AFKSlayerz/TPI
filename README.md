@@ -29,7 +29,7 @@ Une fois ces étapes réalisée il vous faut aller dans les paramètres généra
 ### Réalisé avec 
 
 * XCode 9.3 - software disponible sur l'app store
-* Swift 4 - Language de programmation d'apple
+* Swift 4 - Language de programmation pour des applications et jeu IOS et MacOS
 
 ## Autheur
 
