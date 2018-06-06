@@ -1,9 +1,9 @@
 # Projet TPI
 
-# Description
+## Description
 
-# Objectif
+## Objectif
 
 
-# Auteur
+#### Auteur
 Mikel Harnisch
