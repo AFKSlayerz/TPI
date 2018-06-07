@@ -1,88 +1,36 @@
-# Project Title
+# School Invaders
 
-Ce projet est réaliser sous Swift un language de programmation d'IOS. Il s’agit d’un jeu à but pédagogique permettant aux joueurs d’apprendre le vocabulaire d’une langue étrangère. Il est basé sur le célèbre jeu d’arcade Space Invaders. Le projet me permettra d’approfondir mes connaissances en développement Swift et pourras m’être utile dans le futur et dans la vie professionnelle. Comme préparation pour ce projet j’ai eu un à développer un Tetris lors du cours de préparation de TPI.
+Ce projet est réaliser sous Swift un language de programmation d'IOS. Il s’agit d’un jeu à but pédagogique permettant aux joueurs d’apprendre le vocabulaire d’une langue étrangère. Il est basé sur le célèbre jeu d’arcade Space Invaders, à la place du vaisseau ce trouve un professeur et à la place des aliens, des élèves. Les élèves ce déplacent latéralement comme dans Space Invaders et le professeur aussi. 
 
-## Getting Started
+## Mise en Place
 
-These instructions will get you a copy of the project up and running on your local machine.
+Ces instructions vous permettrons d'avoir une copie du projet fonctionnel sur votre machine.
 
-### Prerequisites
+### Pré-requis
 
-What things you need to install the software and how to install them
+⋅⋅* Un Ipad/Iphone sous IOS 10 ou supérieur
+⋅⋅* Un cable pour transférer les données
+⋅⋅* Un ordinateur avec Xcode 9.3 d'installer
 
-```
-Give examples
-```
+L'application est optimisée pour un IPAD 4 mais l'utilisation fonctionne aussi sous d'autre device IOS.
 
-### Installing
+### Installation
 
-A step by step series of examples that tell you how to get a development env running
+Brancher votre device à l'ordinateur puis exécutez ces étapes :
 
-Say what the step will be
+1. Téléchargez le projet depuis le repository Git
+2. Dans le dossier /TPI-master/Code/, exécutez "School Invaders.xcodeproj"
+3. Choisissez votre compte dévloppeur Apple dans Xcode
+4. Choisissez la device sur laquelle vous voulez le jeu
+5. Lancez le build
 
-```
-Give the example
-```
+Une fois ces étapes réalisée il vous faut aller dans les paramètres généraux de votre device sous "Gestion des appareils" et autorisez le compte dévloppeur.
 
-And repeat
+### Réalisé avec 
 
-```
-until finished
-```
+* XCode 9.3 - software disponible sur l'app store
+* Swift 4 - Language de programmation pour des applications et jeu IOS et MacOS
 
-End with an example of getting some data out of the system or using it for a little demo
+## Autheur
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
+Mikel Harnisch
